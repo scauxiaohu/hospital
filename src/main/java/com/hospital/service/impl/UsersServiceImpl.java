@@ -7,6 +7,7 @@ import com.hospital.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Users)表服务实现类
@@ -18,6 +19,27 @@ import javax.annotation.Resource;
 public class UsersServiceImpl implements UsersService {
 @Resource
 private UsersMapper usersMapper;
+
+       public Result login(Users user)
+        {
+           List<Users> users=usersMapper.queryAll(user);
+           if(users.size()==0||users==null)
+           {
+                   Users userResult=usersMapper.queryById(user.getUserId());
+                   if(userResult==null)
+                   {
+                       return Result.error("用户不存在");
+                   }
+                   else
+                   {
+                       return Result.error("密码错误");
+                   }
+           }
+                return Result.success(users.get(0));
+
+           }
+
+
 
 /**
  * 通过ID查询单条数据

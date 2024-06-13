@@ -8,4 +8,4 @@ spring:
     password: hu564342007
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.xiaohu.hospital.entity
+  type-aliases-package: com.hospital.entity

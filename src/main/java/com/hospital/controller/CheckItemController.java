@@ -15,7 +15,9 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("checkItem")
-public class CheckItemController {
+public class
+
+CheckItemController {
 /**
  * 服务对象
  */
