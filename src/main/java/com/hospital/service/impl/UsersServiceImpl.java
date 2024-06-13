@@ -52,8 +52,10 @@ private UsersMapper usersMapper;
            return Result.error("用户已存在");
        }
        user.setUserType(1);
-        usersMapper.insert(user);
+        Integer result=usersMapper.insert(user);
+        if(result==1)
         return Result.success(user);
+        else return Result.error("注册失败");
     }
 
 

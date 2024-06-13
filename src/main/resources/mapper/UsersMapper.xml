@@ -80,9 +80,9 @@ userId, password, realName, sex, identityCard, birthday, userType
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into users(password, realName, sex, identityCard, birthday, userType)
-        values (#{password}, #{realName}, #{sex}, #{identityCard}, #{birthday}, #{userType})
+    <insert id="insert">
+        insert into users(userId,password, realName, sex, identityCard, birthday, userType)
+        values (#{userId},#{password}, #{realName}, #{sex}, #{identityCard}, #{birthday}, #{userType})
     </insert>
 
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
