@@ -22,9 +22,25 @@ public class UsersController {
 @Resource
 private UsersService usersService;
 
-@GetMapping("login")
+    /**
+     * 登录
+     * @param user
+     * @return
+     */
+    @GetMapping("login")
         public Result login(@RequestBody Users user) {
             return usersService.login(user);
         }
+
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    @PostMapping("register")
+    public Result register(@RequestBody Users user) {
+        return usersService.register(user);
+    }
 }
 

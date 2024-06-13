@@ -20,6 +20,12 @@ public class UsersServiceImpl implements UsersService {
 @Resource
 private UsersMapper usersMapper;
 
+
+/**
+ * 登录
+ * @param user
+ * @return
+ */
        public Result login(Users user)
         {
            List<Users> users=usersMapper.queryAll(user);
@@ -39,9 +45,19 @@ private UsersMapper usersMapper;
 
            }
 
+    @Override
+    public Result register(Users user) {
+       Users userResult=usersMapper.queryById(user.getUserId());
+       if(userResult!=null) {
+           return Result.error("用户已存在");
+       }
+       user.setUserType(1);
+        usersMapper.insert(user);
+        return Result.success(user);
+    }
 
 
-/**
+    /**
  * 通过ID查询单条数据
  *
  * @param userId 主键

@@ -52,5 +52,7 @@ public interface UsersService {
         Result deleteById(String userId);
 
     Result login(Users user);
+
+        Result register(Users user);
 }
 
