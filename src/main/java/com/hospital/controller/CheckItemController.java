@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 /**
  * (CheckItem)表控制层
  *
- * @author xiaohu 不是哥们
+ * @author xiaohu
  * @since 2024-06-13 12:37:00
  */
 @RestController
