@@ -29,9 +29,9 @@ private UsersService usersService;
      * @param password
      * @return
      */
-    @GetMapping("login")
-        public Result login(@RequestParam("userId") String userId,@RequestParam("password") String password) {
-            return usersService.login(userId,password);
+    @PostMapping("login")
+        public Result login(@RequestBody Users user) {
+        return usersService.login(user);
         }
 
 
