@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiaohu.hospital.mapper.OrdersMapper">
+<mapper namespace="com.hospital.mapper.OrdersMapper">
 
-    <resultMap type="com.xiaohu.hospital.entity.Orders" id="OrdersMap">
+    <resultMap type="com.hospital.entity.Orders" id="OrdersMap">
         <result property="orderId" column="orderId" jdbcType="INTEGER"/>
         <result property="orderDate" column="orderDate" jdbcType="TIMESTAMP"/>
         <result property="userId" column="userId" jdbcType="VARCHAR"/>

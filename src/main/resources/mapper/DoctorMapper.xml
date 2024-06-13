@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiaohu.hospital.mapper.DoctorMapper">
+<mapper namespace="com.hospital.mapper.DoctorMapper">
 
-    <resultMap type="com.xiaohu.hospital.entity.Doctor" id="DoctorMap">
+    <resultMap type="com.hospital.entity.Doctor" id="DoctorMap">
         <result property="docId" column="docId" jdbcType="INTEGER"/>
         <result property="docCode" column="docCode" jdbcType="VARCHAR"/>
         <result property="realName" column="realName" jdbcType="VARCHAR"/>

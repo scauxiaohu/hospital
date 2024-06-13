@@ -75,7 +75,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.xiaohu.hospital.HospitalApplication</mainClass>
+                    <mainClass>com.hospital.HospitalApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
