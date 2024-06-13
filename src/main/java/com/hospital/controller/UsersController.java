@@ -31,6 +31,7 @@ private UsersService usersService;
      */
     @GetMapping("login")
         public Result login(@RequestParam("userId") String userId,@RequestParam("password") String password) {
+        System.out.println(userId+password);
             return usersService.login(userId,password);
         }
 
