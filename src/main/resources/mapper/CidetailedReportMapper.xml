@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.CidetailedReportMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.CidetailedReport" id="CidetailedReportMap">
+        <result property="cidrId" column="cidrId" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="minrange" column="minrange" jdbcType="NUMERIC"/>
+        <result property="maxrange" column="maxrange" jdbcType="NUMERIC"/>
+        <result property="normalValue" column="normalValue" jdbcType="VARCHAR"/>
+        <result property="normalValueString" column="normalValueString" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="isError" column="isError" jdbcType="INTEGER"/>
+        <result property="ciId" column="ciId" jdbcType="INTEGER"/>
+        <result property="orderId" column="orderId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CidetailedReportMap">
+        select
+cidrId, name, unit, minrange, maxrange, normalValue, normalValueString, type, value, isError, ciId, orderId
+        from cidetailed_report
+        where cidrId = #{cidrId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="CidetailedReportMap">
+        select
+cidrId, name, unit, minrange, maxrange, normalValue, normalValueString, type, value, isError, ciId, orderId
+        from cidetailed_report
+        <where>
+            <if test="cidrId != null">
+                and cidrId = #{cidrId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="minrange != null">
+                and minrange = #{minrange}
+            </if>
+            <if test="maxrange != null">
+                and maxrange = #{maxrange}
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                and normalValue = #{normalValue}
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                and normalValueString = #{normalValueString}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="isError != null">
+                and isError = #{isError}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="orderId != null">
+                and orderId = #{orderId}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from cidetailed_report
+        <where>
+            <if test="cidrId != null">
+                and cidrId = #{cidrId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="minrange != null">
+                and minrange = #{minrange}
+            </if>
+            <if test="maxrange != null">
+                and maxrange = #{maxrange}
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                and normalValue = #{normalValue}
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                and normalValueString = #{normalValueString}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="isError != null">
+                and isError = #{isError}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="orderId != null">
+                and orderId = #{orderId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cidrId" useGeneratedKeys="true">
+        insert into cidetailed_report(name, unit, minrange, maxrange, normalValue, normalValueString, type, value, isError, ciId, orderId)
+        values (#{name}, #{unit}, #{minrange}, #{maxrange}, #{normalValue}, #{normalValueString}, #{type}, #{value}, #{isError}, #{ciId}, #{orderId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="cidrId" useGeneratedKeys="true">
+        insert into cidetailed_report(name, unit, minrange, maxrange, normalValue, normalValueString, type, value, isError, ciId, orderId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.unit}, #{entity.minrange}, #{entity.maxrange}, #{entity.normalValue}, #{entity.normalValueString}, #{entity.type}, #{entity.value}, #{entity.isError}, #{entity.ciId}, #{entity.orderId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="cidrId" useGeneratedKeys="true">
+        insert into cidetailed_report(name, unit, minrange, maxrange, normalValue, normalValueString, type, value, isError, ciId, orderId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.unit}, #{entity.minrange}, #{entity.maxrange}, #{entity.normalValue}, #{entity.normalValueString}, #{entity.type}, #{entity.value}, #{entity.isError}, #{entity.ciId}, #{entity.orderId})
+        </foreach>
+        on duplicate key update
+name = values(name),
+unit = values(unit),
+minrange = values(minrange),
+maxrange = values(maxrange),
+normalValue = values(normalValue),
+normalValueString = values(normalValueString),
+type = values(type),
+value = values(value),
+isError = values(isError),
+ciId = values(ciId),
+orderId = values(orderId)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update cidetailed_report
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="minrange != null">
+                minrange = #{minrange},
+            </if>
+            <if test="maxrange != null">
+                maxrange = #{maxrange},
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                normalValue = #{normalValue},
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                normalValueString = #{normalValueString},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="value != null and value != ''">
+                value = #{value},
+            </if>
+            <if test="isError != null">
+                isError = #{isError},
+            </if>
+            <if test="ciId != null">
+                ciId = #{ciId},
+            </if>
+            <if test="orderId != null">
+                orderId = #{orderId},
+            </if>
+        </set>
+        where cidrId = #{cidrId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from cidetailed_report where cidrId = #{cidrId}
+    </delete>
+
+</mapper>
+
+

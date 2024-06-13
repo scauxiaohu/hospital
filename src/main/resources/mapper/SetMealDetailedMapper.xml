@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.SetMealDetailedMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.SetMealDetailed" id="SetMealDetailedMap">
+        <result property="sdId" column="sdId" jdbcType="INTEGER"/>
+        <result property="smId" column="smId" jdbcType="INTEGER"/>
+        <result property="ciId" column="ciId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SetMealDetailedMap">
+        select
+sdId, smId, ciId
+        from set_meal_detailed
+        where sdId = #{sdId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="SetMealDetailedMap">
+        select
+sdId, smId, ciId
+        from set_meal_detailed
+        <where>
+            <if test="sdId != null">
+                and sdId = #{sdId}
+            </if>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from set_meal_detailed
+        <where>
+            <if test="sdId != null">
+                and sdId = #{sdId}
+            </if>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sdId" useGeneratedKeys="true">
+        insert into set_meal_detailed(smId, ciId)
+        values (#{smId}, #{ciId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="sdId" useGeneratedKeys="true">
+        insert into set_meal_detailed(smId, ciId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.smId}, #{entity.ciId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="sdId" useGeneratedKeys="true">
+        insert into set_meal_detailed(smId, ciId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.smId}, #{entity.ciId})
+        </foreach>
+        on duplicate key update
+smId = values(smId),
+ciId = values(ciId)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update set_meal_detailed
+        <set>
+            <if test="smId != null">
+                smId = #{smId},
+            </if>
+            <if test="ciId != null">
+                ciId = #{ciId},
+            </if>
+        </set>
+        where sdId = #{sdId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from set_meal_detailed where sdId = #{sdId}
+    </delete>
+
+</mapper>
+
+

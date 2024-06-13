@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.CheckItemDetailedMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.CheckItemDetailed" id="CheckItemDetailedMap">
+        <result property="cdId" column="cdId" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="minrange" column="minrange" jdbcType="NUMERIC"/>
+        <result property="maxrange" column="maxrange" jdbcType="NUMERIC"/>
+        <result property="normalValue" column="normalValue" jdbcType="VARCHAR"/>
+        <result property="normalValueString" column="normalValueString" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="ciId" column="ciId" jdbcType="INTEGER"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CheckItemDetailedMap">
+        select
+cdId, name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId, remarks
+        from check_item_detailed
+        where cdId = #{cdId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="CheckItemDetailedMap">
+        select
+cdId, name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId, remarks
+        from check_item_detailed
+        <where>
+            <if test="cdId != null">
+                and cdId = #{cdId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="minrange != null">
+                and minrange = #{minrange}
+            </if>
+            <if test="maxrange != null">
+                and maxrange = #{maxrange}
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                and normalValue = #{normalValue}
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                and normalValueString = #{normalValueString}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from check_item_detailed
+        <where>
+            <if test="cdId != null">
+                and cdId = #{cdId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="minrange != null">
+                and minrange = #{minrange}
+            </if>
+            <if test="maxrange != null">
+                and maxrange = #{maxrange}
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                and normalValue = #{normalValue}
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                and normalValueString = #{normalValueString}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cdId" useGeneratedKeys="true">
+        insert into check_item_detailed(name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId, remarks)
+        values (#{name}, #{unit}, #{minrange}, #{maxrange}, #{normalValue}, #{normalValueString}, #{type}, #{ciId}, #{remarks})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="cdId" useGeneratedKeys="true">
+        insert into check_item_detailed(name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId, remarks)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.unit}, #{entity.minrange}, #{entity.maxrange}, #{entity.normalValue}, #{entity.normalValueString}, #{entity.type}, #{entity.ciId}, #{entity.remarks})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="cdId" useGeneratedKeys="true">
+        insert into check_item_detailed(name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId, remarks)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.unit}, #{entity.minrange}, #{entity.maxrange}, #{entity.normalValue}, #{entity.normalValueString}, #{entity.type}, #{entity.ciId}, #{entity.remarks})
+        </foreach>
+        on duplicate key update
+name = values(name),
+unit = values(unit),
+minrange = values(minrange),
+maxrange = values(maxrange),
+normalValue = values(normalValue),
+normalValueString = values(normalValueString),
+type = values(type),
+ciId = values(ciId),
+remarks = values(remarks)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update check_item_detailed
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="minrange != null">
+                minrange = #{minrange},
+            </if>
+            <if test="maxrange != null">
+                maxrange = #{maxrange},
+            </if>
+            <if test="normalValue != null and normalValue != ''">
+                normalValue = #{normalValue},
+            </if>
+            <if test="normalValueString != null and normalValueString != ''">
+                normalValueString = #{normalValueString},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="ciId != null">
+                ciId = #{ciId},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where cdId = #{cdId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from check_item_detailed where cdId = #{cdId}
+    </delete>
+
+</mapper>
+
+

@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dp?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: hu564342007
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.xiaohu.hospital.entity

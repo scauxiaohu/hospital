@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.OrdersMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.Orders" id="OrdersMap">
+        <result property="orderId" column="orderId" jdbcType="INTEGER"/>
+        <result property="orderDate" column="orderDate" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="userId" jdbcType="VARCHAR"/>
+        <result property="hpId" column="hpId" jdbcType="INTEGER"/>
+        <result property="smId" column="smId" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrdersMap">
+        select
+orderId, orderDate, userId, hpId, smId, state
+        from orders
+        where orderId = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="OrdersMap">
+        select
+orderId, orderDate, userId, hpId, smId, state
+        from orders
+        <where>
+            <if test="orderId != null">
+                and orderId = #{orderId}
+            </if>
+            <if test="orderDate != null">
+                and orderDate = #{orderDate}
+            </if>
+            <if test="userId != null and userId != ''">
+                and userId = #{userId}
+            </if>
+            <if test="hpId != null">
+                and hpId = #{hpId}
+            </if>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from orders
+        <where>
+            <if test="orderId != null">
+                and orderId = #{orderId}
+            </if>
+            <if test="orderDate != null">
+                and orderDate = #{orderDate}
+            </if>
+            <if test="userId != null and userId != ''">
+                and userId = #{userId}
+            </if>
+            <if test="hpId != null">
+                and hpId = #{hpId}
+            </if>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into orders(orderDate, userId, hpId, smId, state)
+        values (#{orderDate}, #{userId}, #{hpId}, #{smId}, #{state})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="orderId" useGeneratedKeys="true">
+        insert into orders(orderDate, userId, hpId, smId, state)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.orderDate}, #{entity.userId}, #{entity.hpId}, #{entity.smId}, #{entity.state})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="orderId" useGeneratedKeys="true">
+        insert into orders(orderDate, userId, hpId, smId, state)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderDate}, #{entity.userId}, #{entity.hpId}, #{entity.smId}, #{entity.state})
+        </foreach>
+        on duplicate key update
+orderDate = values(orderDate),
+userId = values(userId),
+hpId = values(hpId),
+smId = values(smId),
+state = values(state)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update orders
+        <set>
+            <if test="orderDate != null">
+                orderDate = #{orderDate},
+            </if>
+            <if test="userId != null and userId != ''">
+                userId = #{userId},
+            </if>
+            <if test="hpId != null">
+                hpId = #{hpId},
+            </if>
+            <if test="smId != null">
+                smId = #{smId},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where orderId = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from orders where orderId = #{orderId}
+    </delete>
+
+</mapper>
+
+

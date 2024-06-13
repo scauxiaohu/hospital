@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.SetMealMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.SetMeal" id="SetMealMap">
+        <result property="smId" column="smId" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SetMealMap">
+        select
+smId, name, type, price
+        from set_meal
+        where smId = #{smId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="SetMealMap">
+        select
+smId, name, type, price
+        from set_meal
+        <where>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from set_meal
+        <where>
+            <if test="smId != null">
+                and smId = #{smId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="smId" useGeneratedKeys="true">
+        insert into set_meal(name, type, price)
+        values (#{name}, #{type}, #{price})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="smId" useGeneratedKeys="true">
+        insert into set_meal(name, type, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.type}, #{entity.price})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="smId" useGeneratedKeys="true">
+        insert into set_meal(name, type, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.type}, #{entity.price})
+        </foreach>
+        on duplicate key update
+name = values(name),
+type = values(type),
+price = values(price)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update set_meal
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+        </set>
+        where smId = #{smId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from set_meal where smId = #{smId}
+    </delete>
+
+</mapper>
+
+

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.CheckItemMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.CheckItem" id="CheckItemMap">
+        <result property="ciId" column="ciId" jdbcType="INTEGER"/>
+        <result property="ciName" column="ciName" jdbcType="VARCHAR"/>
+        <result property="ciContent" column="ciContent" jdbcType="VARCHAR"/>
+        <result property="meaning" column="meaning" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CheckItemMap">
+        select
+ciId, ciName, ciContent, meaning, remarks
+        from check_item
+        where ciId = #{ciId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="CheckItemMap">
+        select
+ciId, ciName, ciContent, meaning, remarks
+        from check_item
+        <where>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="ciName != null and ciName != ''">
+                and ciName = #{ciName}
+            </if>
+            <if test="ciContent != null and ciContent != ''">
+                and ciContent = #{ciContent}
+            </if>
+            <if test="meaning != null and meaning != ''">
+                and meaning = #{meaning}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from check_item
+        <where>
+            <if test="ciId != null">
+                and ciId = #{ciId}
+            </if>
+            <if test="ciName != null and ciName != ''">
+                and ciName = #{ciName}
+            </if>
+            <if test="ciContent != null and ciContent != ''">
+                and ciContent = #{ciContent}
+            </if>
+            <if test="meaning != null and meaning != ''">
+                and meaning = #{meaning}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="ciId" useGeneratedKeys="true">
+        insert into check_item(ciName, ciContent, meaning, remarks)
+        values (#{ciName}, #{ciContent}, #{meaning}, #{remarks})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="ciId" useGeneratedKeys="true">
+        insert into check_item(ciName, ciContent, meaning, remarks)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.ciName}, #{entity.ciContent}, #{entity.meaning}, #{entity.remarks})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="ciId" useGeneratedKeys="true">
+        insert into check_item(ciName, ciContent, meaning, remarks)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.ciName}, #{entity.ciContent}, #{entity.meaning}, #{entity.remarks})
+        </foreach>
+        on duplicate key update
+ciName = values(ciName),
+ciContent = values(ciContent),
+meaning = values(meaning),
+remarks = values(remarks)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update check_item
+        <set>
+            <if test="ciName != null and ciName != ''">
+                ciName = #{ciName},
+            </if>
+            <if test="ciContent != null and ciContent != ''">
+                ciContent = #{ciContent},
+            </if>
+            <if test="meaning != null and meaning != ''">
+                meaning = #{meaning},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where ciId = #{ciId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from check_item where ciId = #{ciId}
+    </delete>
+
+</mapper>
+
+

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaohu.hospital.mapper.DoctorMapper">
+
+    <resultMap type="com.xiaohu.hospital.entity.Doctor" id="DoctorMap">
+        <result property="docId" column="docId" jdbcType="INTEGER"/>
+        <result property="docCode" column="docCode" jdbcType="VARCHAR"/>
+        <result property="realName" column="realName" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="deptno" column="deptno" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DoctorMap">
+        select
+docId, docCode, realName, password, sex, deptno
+        from doctor
+        where docId = #{docId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="DoctorMap">
+        select
+docId, docCode, realName, password, sex, deptno
+        from doctor
+        <where>
+            <if test="docId != null">
+                and docId = #{docId}
+            </if>
+            <if test="docCode != null and docCode != ''">
+                and docCode = #{docCode}
+            </if>
+            <if test="realName != null and realName != ''">
+                and realName = #{realName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="deptno != null">
+                and deptno = #{deptno}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from doctor
+        <where>
+            <if test="docId != null">
+                and docId = #{docId}
+            </if>
+            <if test="docCode != null and docCode != ''">
+                and docCode = #{docCode}
+            </if>
+            <if test="realName != null and realName != ''">
+                and realName = #{realName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="deptno != null">
+                and deptno = #{deptno}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="docId" useGeneratedKeys="true">
+        insert into doctor(docCode, realName, password, sex, deptno)
+        values (#{docCode}, #{realName}, #{password}, #{sex}, #{deptno})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="docId" useGeneratedKeys="true">
+        insert into doctor(docCode, realName, password, sex, deptno)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.docCode}, #{entity.realName}, #{entity.password}, #{entity.sex}, #{entity.deptno})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="docId" useGeneratedKeys="true">
+        insert into doctor(docCode, realName, password, sex, deptno)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.docCode}, #{entity.realName}, #{entity.password}, #{entity.sex}, #{entity.deptno})
+        </foreach>
+        on duplicate key update
+docCode = values(docCode),
+realName = values(realName),
+password = values(password),
+sex = values(sex),
+deptno = values(deptno)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update doctor
+        <set>
+            <if test="docCode != null and docCode != ''">
+                docCode = #{docCode},
+            </if>
+            <if test="realName != null and realName != ''">
+                realName = #{realName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="deptno != null">
+                deptno = #{deptno},
+            </if>
+        </set>
+        where docId = #{docId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from doctor where docId = #{docId}
+    </delete>
+
+</mapper>
+
+
