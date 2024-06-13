@@ -21,8 +21,7 @@ public class CheckItemController {
  */
 @Resource
 private CheckItemService checkItemService;
-@Resource
-private Result result;
+
 /**
  * 全查询
  *
