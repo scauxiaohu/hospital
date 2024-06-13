@@ -3,6 +3,7 @@ package com.hospital.controller;
 import com.hospital.entity.Users;
 import com.hospital.service.UsersService;
 import com.hospital.util.Result;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,12 +25,13 @@ private UsersService usersService;
 
     /**
      * 登录
-     * @param user
+     * @param userId
+     * @param password
      * @return
      */
     @GetMapping("login")
-        public Result login(@RequestBody Users user) {
-            return usersService.login(user);
+        public Result login(@RequestParam("userId") String userId,@RequestParam("password") String password) {
+            return usersService.login(userId,password);
         }
 
 

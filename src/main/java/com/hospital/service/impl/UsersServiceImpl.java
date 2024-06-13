@@ -23,11 +23,15 @@ private UsersMapper usersMapper;
 
 /**
  * 登录
- * @param user
+ * @param userId
+ * @param password
  * @return
  */
-       public Result login(Users user)
+       public Result login(String userId, String password)
         {
+            Users user=new Users();
+            user.setUserId(userId);
+            user.setPassword(password);
            List<Users> users=usersMapper.queryAll(user);
            if(users.size()==0||users==null)
            {
