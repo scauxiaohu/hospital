@@ -49,9 +49,10 @@ public Result queryAll(Orders orders) {
  */
 @Override
 public Result insert(Orders orders) {
-        this.ordersMapper.insert(orders);
+        orders.setState(1);
+        ordersMapper.insert(orders);
         return Result.success(orders);
-        }
+}
 
 /**
  * 修改数据
