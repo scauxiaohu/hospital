@@ -51,5 +51,8 @@ public interface HospitalService {
          */
         Result deleteById(Integer hpId);
 
-        }
+    Result hospitalList();
+
+
+}
 

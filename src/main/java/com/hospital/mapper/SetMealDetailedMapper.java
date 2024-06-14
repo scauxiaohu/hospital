@@ -1,6 +1,7 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.SetMealDetailed;
+import com.hospital.response.MealInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -80,6 +81,12 @@ public interface SetMealDetailedMapper {
          */
         int deleteById(Integer sdId);
 
+    /**
+     * 根据套餐SmId查询套餐详细信息
+     * @param smId
+     * @return
+     */
+    List<SetMealDetailed> queryBySmId(@Param("smId") Integer smId);
 }
 
 

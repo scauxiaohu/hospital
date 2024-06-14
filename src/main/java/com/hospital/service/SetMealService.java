@@ -51,5 +51,6 @@ public interface SetMealService {
          */
         Result deleteById(Integer smId);
 
-        }
+    Result getSetMealsByType(Integer type);
+}
 

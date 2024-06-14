@@ -16,67 +16,18 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("hospital")
 public class HospitalController {
-/**
- * 服务对象
- */
-@Resource
-private HospitalService hospitalService;
-
-/**
- * 全查询
- *
- * @param hospital 筛选条件
- * @return 查询结果
- */
-@GetMapping
-public Result queryAll(Hospital hospital) {
-        return this.hospitalService.queryAll(hospital);
+        /**
+         * 服务对象
+         */
+        @Resource
+        private HospitalService hospitalService;
+        /**
+         * 查询所有医院信息
+         * @return 医院信息
+         */
+        @GetMapping("hospitalList")
+        public Result hospitalList() {
+                return hospitalService.hospitalList();
         }
 
-/**
- * 通过主键查询单条数据
- *
- * @param id 主键
- * @return 单条数据
- */
-@GetMapping("{id}")
-public Result queryById(@PathVariable("id") Integer id) {
-        return this.hospitalService.queryById(id);
-        }
-
-/**
- * 新增数据
- *
- * @param hospital 实体
- * @return 新增结果
- */
-@PostMapping
-public Result add(@RequestBody Hospital hospital) {
-        return this.hospitalService.insert(hospital);
-        }
-
-/**
- * 编辑数据
- *
- * @param hospital 实体
- * @return 编辑结果
- */
-@PutMapping
-public Result edit(@RequestBody Hospital hospital) {
-        return this.hospitalService.update(hospital);
-        }
-
-/**
- * 删除数据
- *
- * @param id 主键
- * @return 删除是否成功
- */
-@DeleteMapping
-public Result deleteById(Integer id) {
-        return this.hospitalService.deleteById(id);
-        }
-
-        }
-
-
+}

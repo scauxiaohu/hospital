@@ -80,6 +80,12 @@ public interface SetMealMapper {
          */
         int deleteById(Integer smId);
 
+    /**
+     * 根据套餐类型查询套餐
+     * @param type
+     * @return
+     */
+    List<SetMeal> getSetMealsByType(@Param("type") Integer type);
 }
 
 

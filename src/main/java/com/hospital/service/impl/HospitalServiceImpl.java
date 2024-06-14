@@ -7,6 +7,7 @@ import com.hospital.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Hospital)表服务实现类
@@ -67,7 +68,6 @@ public Result update(Hospital hospital) {
 
 /**
  * 通过主键删除数据
- *
  * @param hpId 主键
  * @return 是否成功
  */
@@ -76,5 +76,20 @@ public Result deleteById(Integer hpId) {
         boolean del = this.hospitalMapper.deleteById(hpId) > 0;
         return Result.success(del);
         }
+/**
+ * 查询所有医院列表
+ * @return 医院列表
+ */
+        @Override
+        public Result hospitalList()
+        {
+                List<Hospital> hospitalList = hospitalMapper.queryByState();
+                if(hospitalList.size() == 0||hospitalList == null)
+                {
+                        return Result.error("暂无数据");
+                }
+                return Result.success(hospitalList);
+        }
+
         }
 

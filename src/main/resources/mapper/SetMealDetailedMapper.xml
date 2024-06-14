@@ -50,6 +50,9 @@ sdId, smId, ciId
             </if>
         </where>
     </select>
+    <select id="queryBySmId" resultMap="SetMealDetailedMap">
+        SELECT * FROM set_meal_detailed WHERE smId = #{smId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="sdId" useGeneratedKeys="true">

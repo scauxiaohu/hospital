@@ -79,7 +79,12 @@ public interface HospitalMapper {
          * @return 影响行数
          */
         int deleteById(Integer hpId);
-
+/**
+* 自定义方法
+* 查询所有医院状态为正常的信息
+* @return 医院列表
+ */
+    List<Hospital> queryByState();
 }
 
 

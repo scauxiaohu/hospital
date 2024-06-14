@@ -1,5 +1,10 @@
 package com.hospital.service.impl;
 
+import com.hospital.entity.CheckItem;
+import com.hospital.entity.SetMealDetailed;
+import com.hospital.mapper.CheckItemMapper;
+import com.hospital.mapper.SetMealDetailedMapper;
+import com.hospital.response.MealInfo;
 import com.hospital.service.SetMealService;
 import com.hospital.entity.SetMeal;
 import com.hospital.mapper.SetMealMapper;
@@ -7,6 +12,8 @@ import com.hospital.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * (SetMeal)表服务实现类
@@ -18,7 +25,10 @@ import javax.annotation.Resource;
 public class SetMealServiceImpl implements SetMealService {
 @Resource
 private SetMealMapper setMealMapper;
-
+@Resource
+private SetMealDetailedMapper setMealDetailedMapper;
+@Resource
+private CheckItemMapper checkItemMapper;
 /**
  * 通过ID查询单条数据
  *
@@ -76,5 +86,46 @@ public Result deleteById(Integer smId) {
         boolean del = this.setMealMapper.deleteById(smId) > 0;
         return Result.success(del);
         }
+
+        /**
+         * 根据套餐类型查询套餐信息
+         * @param type
+         * @return
+         */
+        @Override
+       public Result getSetMealsByType(Integer type)
+        {
+                List<SetMeal> setMeals = setMealMapper.getSetMealsByType(type);
+                if(setMeals.size() == 0||setMeals == null)
+                {
+                        return Result.error("未找到相应套餐信息");
+                }
+                List<MealInfo> mealInfos = new ArrayList<>();
+                for(SetMeal setMeal : setMeals) {
+
+                        MealInfo mealInfo = new MealInfo();
+                        mealInfo.setName(setMeal.getName());
+                        mealInfo.setPrice(setMeal.getPrice());
+                        mealInfo.setSmId(setMeal.getSmId());
+                        mealInfo.setType(setMeal.getType());
+
+                        List<SetMealDetailed> setMealDetaileds;
+                        setMealDetaileds = setMealDetailedMapper.queryBySmId(setMeal.getSmId());
+
+                        if(setMealDetaileds.size() != 0||setMealDetaileds != null)
+                        {
+                                for(SetMealDetailed setMealDetailed : setMealDetaileds)
+                                {
+
+                                      CheckItem checkItem = checkItemMapper.queryById(setMealDetailed.getCiId());
+                                      mealInfo.getCheckItems().add(checkItem);
+                                }
+                                mealInfos.add(mealInfo);
+                        }
+                        }
+                return Result.success(mealInfos);
+                }
+
+
         }
 

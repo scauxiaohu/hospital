@@ -57,6 +57,9 @@ smId, name, type, price
             </if>
         </where>
     </select>
+    <select id="getSetMealsByType" resultMap="SetMealMap">
+        SELECT * FROM set_meal WHERE type = #{type}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="smId" useGeneratedKeys="true">
