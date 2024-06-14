@@ -30,7 +30,7 @@ private UsersService usersService;
      */
     @PostMapping("login")
         public Result login(@RequestBody Users user) {
-        System.out.println(user.toString());
+
         return usersService.login(user);
         }
 
