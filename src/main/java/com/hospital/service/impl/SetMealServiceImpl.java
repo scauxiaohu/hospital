@@ -112,11 +112,8 @@ public Result deleteById(Integer smId) {
                         List<SetMealDetailed> setMealDetaileds;
                         setMealDetaileds = setMealDetailedMapper.queryBySmId(setMeal.getSmId());
 
-                        if(setMealDetaileds.size() != 0||setMealDetaileds != null)
-                        {
-                                for(SetMealDetailed setMealDetailed : setMealDetaileds)
-                                {
-
+                        if(setMealDetaileds.size() != 0||setMealDetaileds != null) {
+                                for(SetMealDetailed setMealDetailed : setMealDetaileds) {
                                       CheckItem checkItem = checkItemMapper.queryById(setMealDetailed.getCiId());
                                       mealInfo.getCheckItems().add(checkItem);
                                 }

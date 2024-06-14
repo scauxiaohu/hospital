@@ -50,10 +50,13 @@ public Result queryAll(Orders orders) {
 @Override
 public Result insert(Orders orders) {
         orders.setState(1);
-        ordersMapper.insert(orders);
-        return Result.success(orders);
+        Integer result = ordersMapper.insert(orders);
+        if (result == 1) {
+                return Result.success(orders);
+        } else {
+                return Result.error("新增失败");
+        }
 }
-
 /**
  * 修改数据
  *
