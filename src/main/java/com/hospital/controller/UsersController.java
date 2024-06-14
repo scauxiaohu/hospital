@@ -25,12 +25,12 @@ private UsersService usersService;
 
     /**
      * 登录
-     * @param userId
-     * @param password
+     * @param user
      * @return
      */
     @PostMapping("login")
         public Result login(@RequestBody Users user) {
+        System.out.println(user.toString());
         return usersService.login(user);
         }
 
