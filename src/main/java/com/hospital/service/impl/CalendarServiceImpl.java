@@ -49,6 +49,12 @@ public class CalendarServiceImpl implements CalendarService {
         return  Result.success(calendarBaseResponseList);
     }
 
+    /**
+     * 获取基础日历信息
+     * @param year
+     * @param month
+     * @return
+     */
     private List<CalendarResponse> getCalendarBaseResultList(Integer year, Integer month) {
         // 基础日历
         List<CalendarResponse> calendarResponseList = new ArrayList<>();
@@ -77,6 +83,11 @@ public class CalendarServiceImpl implements CalendarService {
 
     }
 
+    /**
+     * 获取日历信息
+     * @param hpId
+     * @return
+     */
         private List<CalendarResponse> getCalendarResultList(Integer hpId)
     {
        //获得当天日期

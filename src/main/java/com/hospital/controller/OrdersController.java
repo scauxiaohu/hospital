@@ -33,4 +33,22 @@ public class OrdersController {
                 return ordersService.insert(orders);
         }
 
+        /**
+         * 查询订单
+         * @param orders
+         * @return
+         */
+        @PostMapping("checkOrder")
+        public Result check(@RequestBody Orders orders) {
+                return ordersService.check(orders);
+        }
+        /**
+         * 取消订单
+         * @param ordersId
+         * @return
+         */
+        @GetMapping("cancelOrder/{ordersId}")
+        public Result cancel(@PathVariable("ordersId") Integer ordersId) {
+                return ordersService.cancel(ordersId);
+        }
 }

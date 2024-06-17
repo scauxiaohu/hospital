@@ -52,5 +52,8 @@ public interface OrdersService {
         Result deleteById(Integer orderId);
 
 
-        }
+        Result check(Orders orders);
+
+        Result cancel(Integer ordersId);
+}
 
