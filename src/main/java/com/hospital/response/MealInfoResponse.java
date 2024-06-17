@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MealInfo {
+public class MealInfoResponse {
     /**套餐编号*/private Integer smId;
     /**套餐名称*/private String name;
     /**套餐类型（1：男士餐套；0：女士套餐）*/private Integer type;

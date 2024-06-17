@@ -1,13 +1,30 @@
 package com.hospital;
 
+import com.hospital.request.CalendarRequest;
+import com.hospital.service.CalendarService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
 
 @SpringBootTest
 class HospitalApplicationTests {
-
+@Autowired
+private CalendarService calendarService;
     @Test
     void contextLoads() {
+        LocalDate date = LocalDate.now();
+        //假如日期为05月01日，则dayOfMonth为5
+        date = date.withDayOfMonth(05);
+        System.out.println(date); // 假设这是您的日期对象
+        int dayOfMonth = date.getDayOfMonth(); // 提取日期部分
+        String dayStr = String.valueOf(dayOfMonth); // 转换为字符串，个位数时自然不会有前导零
+        System.out.println(dayStr);
     }
-
+    @Test
+    void contextLoads1()
+    {
+        System.out.println(calendarService.listAppointmentCalendar(new CalendarRequest(1, 2024, 6)));
+    }
 }

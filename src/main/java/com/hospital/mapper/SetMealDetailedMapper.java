@@ -1,7 +1,6 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.SetMealDetailed;
-import com.hospital.response.MealInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

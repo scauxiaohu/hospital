@@ -1,9 +1,11 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.Orders;
+import com.hospital.response.CalendarResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -80,6 +82,7 @@ public interface OrdersMapper {
          */
         int deleteById(Integer orderId);
 
+    List<CalendarResponse> getCalendarResultList(@Param("hpId") Integer hpId, @Param("dateList") List<LocalDate> dateList);
 }
 
 

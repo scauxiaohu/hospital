@@ -4,7 +4,7 @@ import com.hospital.entity.CheckItem;
 import com.hospital.entity.SetMealDetailed;
 import com.hospital.mapper.CheckItemMapper;
 import com.hospital.mapper.SetMealDetailedMapper;
-import com.hospital.response.MealInfo;
+import com.hospital.response.MealInfoResponse;
 import com.hospital.service.SetMealService;
 import com.hospital.entity.SetMeal;
 import com.hospital.mapper.SetMealMapper;
@@ -100,14 +100,14 @@ public Result deleteById(Integer smId) {
                 {
                         return Result.error("未找到相应套餐信息");
                 }
-                List<MealInfo> mealInfos = new ArrayList<>();
+                List<MealInfoResponse> mealInfoResponses = new ArrayList<>();
                 for(SetMeal setMeal : setMeals) {
 
-                        MealInfo mealInfo = new MealInfo();
-                        mealInfo.setName(setMeal.getName());
-                        mealInfo.setPrice(setMeal.getPrice());
-                        mealInfo.setSmId(setMeal.getSmId());
-                        mealInfo.setType(setMeal.getType());
+                        MealInfoResponse mealInfoResponse = new MealInfoResponse();
+                        mealInfoResponse.setName(setMeal.getName());
+                        mealInfoResponse.setPrice(setMeal.getPrice());
+                        mealInfoResponse.setSmId(setMeal.getSmId());
+                        mealInfoResponse.setType(setMeal.getType());
 
                         List<SetMealDetailed> setMealDetaileds;
                         setMealDetaileds = setMealDetailedMapper.queryBySmId(setMeal.getSmId());
@@ -115,12 +115,12 @@ public Result deleteById(Integer smId) {
                         if(setMealDetaileds.size() != 0||setMealDetaileds != null) {
                                 for(SetMealDetailed setMealDetailed : setMealDetaileds) {
                                       CheckItem checkItem = checkItemMapper.queryById(setMealDetailed.getCiId());
-                                      mealInfo.getCheckItems().add(checkItem);
+                                      mealInfoResponse.getCheckItems().add(checkItem);
                                 }
-                                mealInfos.add(mealInfo);
+                                mealInfoResponses.add(mealInfoResponse);
                         }
                         }
-                return Result.success(mealInfos);
+                return Result.success(mealInfoResponses);
                 }
 
 

@@ -72,6 +72,13 @@ orderId, orderDate, userId, hpId, smId, state
         </where>
     </select>
 
+    <select id="getCalendarResultList" resultType="com.hospital.response.CalendarResponse">
+        <foreach collection="dateList" item="date"  separator="union">
+            select
+                #{date} as ymd,count(*) as existing from orders where orderDate=#{date} and hpId=#{hpId}
+        </foreach>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
         insert into orders(orderDate, userId, hpId, smId, state)
