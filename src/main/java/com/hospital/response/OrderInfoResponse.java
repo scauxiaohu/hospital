@@ -21,5 +21,5 @@ public class OrderInfoResponse {
     /**所属套餐编号*/private Integer smId;
     /**订单状态（1：未归档；2：已归档）*/private Integer state;
     Hospital hospital;
-    SetMeal setMeal;
+    MealInfoResponse setMeal;
 }

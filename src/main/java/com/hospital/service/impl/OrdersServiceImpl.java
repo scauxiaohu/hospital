@@ -2,6 +2,7 @@ package com.hospital.service.impl;
 
 import com.hospital.entity.*;
 import com.hospital.mapper.*;
+import com.hospital.response.MealInfoResponse;
 import com.hospital.response.OrderInfoResponse;
 import com.hospital.service.HospitalService;
 import com.hospital.service.OrdersService;
@@ -164,7 +165,22 @@ public Result deleteById(Integer orderId) {
                 orderInfoResponse.setSmId(order.getSmId());
                 orderInfoResponse.setState(order.getState());
                 orderInfoResponse.setHospital(hospitalMapper.queryById(order.getHpId()));
-                orderInfoResponse.setSetMeal(setMealMapper.queryById(order.getSmId()));
+
+                SetMeal setMeal = setMealMapper.queryById(order.getSmId());
+            MealInfoResponse mealInfoResponse = new MealInfoResponse();
+            mealInfoResponse.setSmId(setMeal.getSmId());
+            mealInfoResponse.setName(setMeal.getName());
+            mealInfoResponse.setType(setMeal.getType());
+            mealInfoResponse.setPrice(setMeal.getPrice());
+
+            List<CheckItem> checkItemList = new ArrayList<>();
+                List<SetMealDetailed> setMealDetailedList = setMealDetailedMapper.queryBySmId(order.getSmId());
+            for (SetMealDetailed setMealDetailed : setMealDetailedList) {
+                    CheckItem checkItem = checkItemMapper.queryById(setMealDetailed.getCiId());
+                    checkItemList.add(checkItem);
+            }
+            mealInfoResponse.setCheckItems(checkItemList);
+            orderInfoResponse.setSetMeal(mealInfoResponse);
                 orderInfoResponses.add(orderInfoResponse);
 
         }
