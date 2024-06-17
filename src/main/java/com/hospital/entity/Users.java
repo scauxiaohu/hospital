@@ -1,9 +1,12 @@
 package com.hospital.entity;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * (Users)实体类
@@ -20,6 +23,8 @@ public class Users  {
 /**真实姓名*/private String realName;
 /**用户性别（1：男；0女）*/private Integer sex;
 /**身份证号*/private String identityCard;
+//修改Date格式
+@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 /**出生日期*/private Date birthday;
 /**用户类型（1：普通用户；2：东软内部员工；3：其他）*/private Integer userType;
 }

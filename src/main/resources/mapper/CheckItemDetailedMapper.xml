@@ -99,6 +99,9 @@ cdId, name, unit, minrange, maxrange, normalValue, normalValueString, type, ciId
             </if>
         </where>
     </select>
+    <select id="queryByCiId" resultMap="CheckItemDetailedMap">
+        select * from check_item_detailed where ciId = #{ciId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="cdId" useGeneratedKeys="true">

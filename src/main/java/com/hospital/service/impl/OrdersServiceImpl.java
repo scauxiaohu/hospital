@@ -1,15 +1,14 @@
 package com.hospital.service.impl;
 
-import com.hospital.entity.Orders;
-import com.hospital.entity.SetMeal;
-import com.hospital.mapper.HospitalMapper;
-import com.hospital.mapper.OrdersMapper;
-import com.hospital.mapper.SetMealMapper;
+import com.hospital.entity.*;
+import com.hospital.mapper.*;
 import com.hospital.response.OrderInfoResponse;
 import com.hospital.service.HospitalService;
 import com.hospital.service.OrdersService;
 import com.hospital.util.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,7 +28,17 @@ private OrdersMapper ordersMapper;
 private HospitalMapper hospitalMapper;
 @Resource
 private SetMealMapper setMealMapper;
-/**
+@Resource
+private CireportMapper cireportMapper;
+@Resource
+private CheckItemMapper checkItemMapper;
+@Resource
+private CheckItemDetailedMapper checkItemDetailedMapper;
+    @Resource
+    private SetMealDetailedMapper setMealDetailedMapper;
+@Resource
+private CidetailedReportMapper cidetailedReportMapper;
+        /**
  * 通过ID查询单条数据
  *
  * @param orderId 主键
@@ -58,20 +67,61 @@ public Result queryAll(Orders orders) {
  * @return 实例对象
  */
 @Override
+@Transactional
 public Result insert(Orders orders) {
         orders.setState(1);
         List<Orders> ordersList = ordersMapper.queryAll(orders);
         if (ordersList.size() > 0) {
                 return Result.error("今日提交预约，请勿重复提交");
         }
-        Integer result = ordersMapper.insert(orders);
-        if (result == 1) {
+         ordersMapper.insert(orders);
+
+                List<SetMealDetailed> setMealDetailedList = setMealDetailedMapper.queryBySmId(orders.getSmId());
+                for (SetMealDetailed setMealDetailed : setMealDetailedList) {
+
+                     CheckItem checkItem = checkItemMapper.queryById(setMealDetailed.getCiId());
+                     Cireport cireport = new Cireport();
+                     cireport.setCiId(checkItem.getCiId());
+                     cireport.setOrderId(orders.getOrderId());
+                     cireport.setCiName(checkItem.getCiName());
+                   cireportMapper.insert(cireport);
+
+                List<CheckItemDetailed> checkItemDetailedList = checkItemDetailedMapper.queryByCiId(setMealDetailed.getCiId());
+                for (CheckItemDetailed checkItemDetailed : checkItemDetailedList) {
+                    CidetailedReport cidetailedReport = getCidetailedReport(orders, checkItemDetailed, checkItem);
+
+                    cidetailedReportMapper.insert(cidetailedReport);
+
+                }
+                }
                 return Result.success(orders);
-        } else {
-                return Result.error("新增失败");
-        }
+
+
 }
-/**
+
+    /**
+     * 新增数据
+     * @param orders
+     * @param checkItemDetailed
+     * @param checkItem
+     * @return
+     */
+    private CidetailedReport getCidetailedReport(Orders orders, CheckItemDetailed checkItemDetailed, CheckItem checkItem) {
+        CidetailedReport cidetailedReport = new CidetailedReport();
+        cidetailedReport.setName(checkItemDetailed.getName());
+        cidetailedReport.setUnit(checkItemDetailed.getUnit());
+        cidetailedReport.setMinrange(checkItemDetailed.getMinrange());
+        cidetailedReport.setMaxrange(checkItemDetailed.getMaxrange());
+        cidetailedReport.setNormalValue(checkItemDetailed.getNormalValue());
+        cidetailedReport.setNormalValueString(checkItemDetailed.getNormalValueString());
+        cidetailedReport.setType(checkItemDetailed.getType());
+        cidetailedReport.setOrderId(orders.getOrderId());
+        cidetailedReport.setCiId(checkItem.getCiId());
+        cidetailedReport.setIsError(0);
+        return cidetailedReport;
+    }
+
+    /**
  * 修改数据
  *
  * @param orders 实例对象
@@ -116,7 +166,9 @@ public Result deleteById(Integer orderId) {
                 orderInfoResponse.setHospital(hospitalMapper.queryById(order.getHpId()));
                 orderInfoResponse.setSetMeal(setMealMapper.queryById(order.getSmId()));
                 orderInfoResponses.add(orderInfoResponse);
+
         }
+
         return Result.success(orderInfoResponses);
         }
 

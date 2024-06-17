@@ -1,5 +1,6 @@
 package com.hospital.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hospital.entity.Hospital;
 import com.hospital.entity.SetMeal;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Date;
 public class OrderInfoResponse {
 
     /**订单编号*/private Integer orderId;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     /**预约日期*/private Date orderDate;
     /**客户编号*/private String userId;
     /**所属医院编号*/private Integer hpId;

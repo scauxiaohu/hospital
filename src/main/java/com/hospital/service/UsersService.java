@@ -3,6 +3,8 @@ package com.hospital.service;
 import com.hospital.entity.Users;
 import com.hospital.util.Result;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * (Users)表服务接口
  *

@@ -80,6 +80,7 @@ public interface CheckItemDetailedMapper {
          */
         int deleteById(Integer cdId);
 
+    List<CheckItemDetailed> queryByCiId(@Param("ciId") Integer ciId);
 }
 
 

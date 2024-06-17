@@ -7,6 +7,7 @@ import com.hospital.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -41,6 +42,7 @@ private UsersMapper usersMapper;
                        return Result.error("密码错误");
                    }
            }
+
                 return Result.success(users.get(0));
 
            }
