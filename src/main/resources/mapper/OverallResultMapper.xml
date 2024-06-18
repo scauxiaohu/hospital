@@ -57,6 +57,9 @@ orId, title, content, orderId
             </if>
         </where>
     </select>
+    <select id="queryOverallResultByOrderId" resultMap="OverallResultMap">
+        select * from overall_result where orderId = #{orderId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orId" useGeneratedKeys="true">

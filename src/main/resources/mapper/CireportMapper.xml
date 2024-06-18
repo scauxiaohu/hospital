@@ -57,6 +57,9 @@ cirId, ciId, ciName, orderId
             </if>
         </where>
     </select>
+    <select id="queryByOrderId" resultMap="CireportMap">
+        select * from cireport where orderId = #{orderId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="cirId" useGeneratedKeys="true">

@@ -83,6 +83,8 @@ public interface OrdersMapper {
         int deleteById(Integer orderId);
 
     List<CalendarResponse> getCalendarResultList(@Param("hpId") Integer hpId, @Param("dateList") List<LocalDate> dateList);
+
+    List<Orders> queryOrdersByUserId(@Param("userId") String userId);
 }
 
 

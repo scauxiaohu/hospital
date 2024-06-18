@@ -51,5 +51,6 @@ public interface CireportService {
          */
         Result deleteById(Integer cirId);
 
-        }
+    Result checkCireport(String userId);
+}
 

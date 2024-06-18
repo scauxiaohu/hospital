@@ -141,6 +141,7 @@ public Result update(Orders orders) {
  * @return 是否成功
  */
 @Override
+
 public Result deleteById(Integer orderId) {
         boolean del = this.ordersMapper.deleteById(orderId) > 0;
         return Result.success(del);
@@ -193,6 +194,8 @@ public Result deleteById(Integer orderId) {
          * @param ordersId
          * @return
          */
+        @Override
+        @Transactional
         public Result cancel(Integer ordersId)
         {
                 Orders orders = new Orders();

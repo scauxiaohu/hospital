@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Cireport)表数据库访问层
@@ -80,6 +81,7 @@ public interface CireportMapper {
          */
         int deleteById(Integer cirId);
 
+    List<Cireport> queryByOrderId(Integer orderId);
 }
 
 

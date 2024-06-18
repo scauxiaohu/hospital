@@ -4,7 +4,9 @@ import com.hospital.entity.Users;
 import com.hospital.mapper.UsersMapper;
 import com.hospital.service.UsersService;
 import com.hospital.util.Result;
+import org.apache.ibatis.annotations.Options;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -48,6 +50,7 @@ private UsersMapper usersMapper;
            }
 
     @Override
+    @Transactional
     public Result register(Users user) {
        Users userResult=usersMapper.queryById(user.getUserId());
        if(userResult!=null) {

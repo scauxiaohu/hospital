@@ -80,6 +80,7 @@ public interface OverallResultMapper {
          */
         int deleteById(Integer orId);
 
+    List<OverallResult> queryOverallResultByOrderId(Integer orderId);
 }
 
 

@@ -1,5 +1,6 @@
 package com.hospital.mapper;
 
+import com.hospital.entity.CheckItemDetailed;
 import com.hospital.entity.CidetailedReport;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -80,6 +81,7 @@ public interface CidetailedReportMapper {
          */
         int deleteById(Integer cidrId);
 
+    List<CidetailedReport> queryCidetailedReportByCirIdAndOrderId(@Param("ciId") Integer cirId, @Param("orderId") Integer orderId);
 }
 
 

@@ -113,6 +113,9 @@ cidrId, name, unit, minrange, maxrange, normalValue, normalValueString, type, va
             </if>
         </where>
     </select>
+    <select id="queryCidetailedReportByCirIdAndOrderId" resultMap="CidetailedReportMap">
+        select * from cidetailed_report where ciId = #{ciId} and orderId = #{orderId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="cidrId" useGeneratedKeys="true">
