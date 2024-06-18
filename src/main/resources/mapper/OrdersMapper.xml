@@ -79,7 +79,7 @@ orderId, orderDate, userId, hpId, smId, state
         </foreach>
     </select>
     <select id="queryOrdersByUserId" resultMap="OrdersMap">
-        select * from orders where userId = #{userId} AND state = 1
+        select * from orders where userId = #{userId} AND state = 2
     </select>
 
     <!--新增所有列-->
