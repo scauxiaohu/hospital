@@ -44,6 +44,7 @@ orderId, orderDate, userId, hpId, smId, state
                 and state = #{state}
             </if>
         </where>
+        order by orderDate DESC
     </select>
 
     <!--统计总行数-->
