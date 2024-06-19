@@ -12,6 +12,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static com.hospital.util.Status.*;
+
 /**
  * (Users)表服务实现类
  *
@@ -37,16 +39,16 @@ private UsersMapper usersMapper;
                    Users userResult=usersMapper.queryById(user.getUserId());
                    if(userResult==null)
                    {
-                       return Result.error("用户不存在");
+                       return Result.error(USER_LOGIN_NOT_EXIST);
                    }
                    else
                    {
-                       return Result.error("密码错误");
+                       return Result.error(USER_LOGIN_PASSWORD_ERROR);
                    }
            }
 
+               /* return Result.success(users.get(0));*/
                 return Result.success(users.get(0));
-
            }
 
     @Override
@@ -54,13 +56,13 @@ private UsersMapper usersMapper;
     public Result register(Users user) {
        Users userResult=usersMapper.queryById(user.getUserId());
        if(userResult!=null) {
-           return Result.error("用户已存在");
+           return Result.error(USER_REGISTER_ALREADY_EXIST);
        }
        user.setUserType(1);
         Integer result=usersMapper.insert(user);
         if(result==1)
         return Result.success(user);
-        else return Result.error("注册失败");
+        else return Result.error(USER_REGISTER_FAILED);
     }
 
 

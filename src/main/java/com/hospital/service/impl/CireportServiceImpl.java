@@ -7,6 +7,7 @@ import com.hospital.response.CireportInfo;
 import com.hospital.response.ReportInfoResponse;
 import com.hospital.service.CireportService;
 import com.hospital.util.Result;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.hospital.util.Status.CIREPORT_FIND_NOT_EXIST;
 
 /**
  * (Cireport)表服务实现类
@@ -98,7 +101,9 @@ public class CireportServiceImpl implements CireportService {
 
             List<Orders> ordersList = ordersMapper.queryOrdersByUserId(userId);
             List<ReportInfoResponse> reportInfoResponses = new ArrayList<>();
-
+            if (ordersList.isEmpty()) {
+                return Result.error(CIREPORT_FIND_NOT_EXIST);
+            }
             for (Orders order : ordersList) {
                 ReportInfoResponse reportInfoResponse = new ReportInfoResponse();
                 reportInfoResponse.setOrderId(order.getOrderId());
@@ -128,6 +133,33 @@ public class CireportServiceImpl implements CireportService {
             }
             return Result.success(reportInfoResponses);
 
+        /*    //优化代码
+            // 查询用户的所有订单及关联的医院信息
+            List<Orders> ordersList = ordersMapper.queryOrdersByUserId(userId);
+
+            // 提取所有订单ID以进行后续批量查询
+            List<Integer> orderIds = ordersList.stream().map(Orders::getOrderId).collect(Collectors.toList());
+            List<Integer> hospitalIds = ordersList.stream().map(Orders::getHpId).distinct().collect(Collectors.toList());
+
+            //批量查询所有医院的名称
+            Map<Integer, Hospital> hospitalNamesMap = hospitalMapper.batchQueryHospitalNames(hospitalIds);
+*//*System.out.println("hospitalNamesMap: " + hospitalNamesMap);*//*
+            // 批量查询所有订单的OverallResult
+            Map<Integer, List<OverallResult>> overallResultsMap = overallResultMapper.batchQueryOverallResults(orderIds);
+System.out.println("overallResultsMap: " + overallResultsMap);
+
+            // 批量查询所有订单的Cireport信息
+            Map<Integer, List<Cireport>> cireportsMap = cireportMapper.batchQueryCireportsByOrderIds(orderIds);
+        System.out.println("cireportsMap: " + cireportsMap);
+
+            // 批量查询所有CidetailedReport信息
+            Map<Integer, List<CidetailedReport>> cidetailedReportsMap = cidetailedReportMapper.batchQueryCidetailedReports(orderIds);
+System.out.println("cidetailedReportsMap: " + cidetailedReportsMap);
+         System.out.println("cireportsMap: " + cidetailedReportsMap);
+                List<ReportInfoResponse> reportInfoResponses = new ArrayList<>();
+
+
+            return Result.success(reportInfoResponses);*/
         }
 
 }

@@ -1,6 +1,8 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.Cireport;
+import com.hospital.response.CireportInfo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -82,6 +84,10 @@ public interface CireportMapper {
         int deleteById(Integer cirId);
 
     List<Cireport> queryByOrderId(Integer orderId);
+
+    @MapKey("orderId")
+    Map<Integer, List<Cireport>> batchQueryCireportsByOrderIds(@Param("orderIds") List<Integer> orderIds);
+
 }
 
 

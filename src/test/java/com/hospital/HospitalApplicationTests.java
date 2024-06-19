@@ -2,10 +2,13 @@ package com.hospital;
 
 import com.hospital.request.CalendarRequest;
 import com.hospital.service.CalendarService;
+import com.hospital.service.CireportService;
+import com.hospital.service.impl.CireportServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.time.LocalDate;
 
 @SpringBootTest
@@ -22,9 +25,11 @@ private CalendarService calendarService;
         String dayStr = String.valueOf(dayOfMonth); // 转换为字符串，个位数时自然不会有前导零
         System.out.println(dayStr);
     }
+    @Resource
+    private CireportService cireportService;
     @Test
     void contextLoads1()
     {
-        System.out.println(calendarService.listAppointmentCalendar(new CalendarRequest(1, 2024, 6)));
+        cireportService.checkCireport("1234567111");
     }
 }

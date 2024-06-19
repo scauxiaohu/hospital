@@ -96,6 +96,15 @@ hpId, name, picture, telephone, address, businessHours, deadline, rule, state
         SELECT * FROM hospital WHERE state = 1
     </select>
 
+
+    <select id="batchQueryHospitalNames" resultMap="HospitalMap" >
+    SELECT * FROM hospital WHERE hpId IN
+        <foreach collection="hospitalIds" item="hpIds" separator=","  open="(" close=")">
+            #{hpIds}
+        </foreach>
+    </select>
+
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="hpId" useGeneratedKeys="true">
         insert into hospital(name, picture, telephone, address, businessHours, deadline, rule, state)

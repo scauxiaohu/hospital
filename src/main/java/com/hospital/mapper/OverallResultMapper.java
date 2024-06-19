@@ -1,10 +1,12 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.OverallResult;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (OverallResult)表数据库访问层
@@ -81,6 +83,9 @@ public interface OverallResultMapper {
         int deleteById(Integer orId);
 
     List<OverallResult> queryOverallResultByOrderId(Integer orderId);
+
+    @MapKey("orderId")
+    Map<Integer, List<OverallResult>> batchQueryOverallResults(@Param("orderIds") List<Integer> orderIds);
 }
 
 

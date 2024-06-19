@@ -116,6 +116,28 @@ cidrId, name, unit, minrange, maxrange, normalValue, normalValueString, type, va
     <select id="queryCidetailedReportByCirIdAndOrderId" resultMap="CidetailedReportMap">
         select * from cidetailed_report where ciId = #{ciId} and orderId = #{orderId}
     </select>
+    <resultMap id="CidetailedReportMap1" type="java.util.Map">
+        <id property="orderId" column="orderId" jdbcType="INTEGER"/>
+    <collection property="cidetailedReports" javaType="java.util.List" ofType="com.hospital.entity.CidetailedReport">
+        <id property="name" column="name" />
+        <result property="unit" column="unit" />
+        <result property="minrange" column="minrange" />
+        <result property="maxrange" column="maxrange" />
+        <result property="normalValue" column="normalValue" />
+        <result property="normalValueString" column="normalValueString" />
+        <result property="type" column="type" />
+        <result property="value" column="value" />
+        <result property="isError" column="isError" />
+        <result property="ciId" column="ciId" />
+        <result property="orderId" column="orderId" />
+    </collection>
+    </resultMap>
+    <select id="batchQueryCidetailedReports" resultMap="CidetailedReportMap1">
+        select * from cidetailed_report where orderId in
+        <foreach collection="orderIds" item="orderId" separator="," open="(" close=")">
+            #{orderId}
+        </foreach>
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="cidrId" useGeneratedKeys="true">

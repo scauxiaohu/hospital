@@ -1,10 +1,12 @@
 package com.hospital.mapper;
 
 import com.hospital.entity.Hospital;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Hospital)表数据库访问层
@@ -85,6 +87,9 @@ public interface HospitalMapper {
 * @return 医院列表
  */
     List<Hospital> queryByState();
+
+    @MapKey("hpId")
+    Map<Integer, Hospital> batchQueryHospitalNames(@Param("hospitalIds") List<Integer> hospitalIds);
 }
 
 

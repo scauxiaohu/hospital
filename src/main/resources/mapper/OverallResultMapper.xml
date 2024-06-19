@@ -61,6 +61,24 @@ orId, title, content, orderId
         select * from overall_result where orderId = #{orderId}
     </select>
 
+    <!--批量查询-->
+    <resultMap id="OverallResultMap1" type="java.util.Map">
+        <id property="orderId" column="orderId" jdbcType="INTEGER" />
+        <collection property="overallResults" javaType="java.util.ArrayList" ofType="com.hospital.entity.OverallResult" >
+            <result property="orId" column="orId" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="orderId" column="orderId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <select id="batchQueryOverallResults" resultMap="OverallResultMap1">
+        select * from overall_result where orderId in
+        <foreach collection="orderIds" item="orId" separator="," open="(" close=")">
+            #{orId}
+        </foreach>
+
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="orId" useGeneratedKeys="true">
         insert into overall_result(title, content, orderId)

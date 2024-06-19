@@ -7,6 +7,7 @@ import com.hospital.response.OrderInfoResponse;
 import com.hospital.service.HospitalService;
 import com.hospital.service.OrdersService;
 import com.hospital.util.Result;
+import com.hospital.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hospital.util.Status.*;
 
 /**
  * (Orders)表服务实现类
@@ -73,7 +76,7 @@ public Result insert(Orders orders) {
         orders.setState(1);
         List<Orders> ordersList = ordersMapper.queryAll(orders);
         if (ordersList.size() > 0) {
-                return Result.error("今日提交预约，请勿重复提交");
+                return Result.error(ORDER_CREATE_FAILED);
         }
          ordersMapper.insert(orders);
 
@@ -154,9 +157,13 @@ public Result deleteById(Integer orderId) {
          */
         public  Result check(Orders orders)
         {
-                orders.setState(1);
+
         List<Orders> ordersList = ordersMapper.queryAll(orders);
         List<OrderInfoResponse> orderInfoResponses = new ArrayList<>();
+        if(ordersList.size() == 0||ordersList==null)
+        {
+            return Result.error(ORDER_FIND_NOT_EXIST);
+        }
         for (Orders order : ordersList) {
                 OrderInfoResponse orderInfoResponse = new OrderInfoResponse();
                 orderInfoResponse.setOrderId(order.getOrderId());
@@ -200,9 +207,17 @@ public Result deleteById(Integer orderId) {
         {
                 Orders orders = new Orders();
                 orders.setOrderId(ordersId);
-                ordersMapper.queryAll(orders);
+                List<Orders> ordersList = ordersMapper.queryAll(orders);
+                if(ordersList.size() == 0)
+                {
+                        return Result.error(ORDER_FIND_NOT_EXIST);
+                }
                 orders.setState(0);
                 Integer num=ordersMapper.update(orders);
+                if(num!=1)
+                {
+                        return Result.error(ORDER_UPDATE_FAILED);
+                }
                 return Result.success(num);
         }
 

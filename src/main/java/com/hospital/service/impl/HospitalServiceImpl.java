@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.hospital.util.Status.*;
+
 /**
  * (Hospital)表服务实现类
  *
@@ -86,7 +88,7 @@ public Result deleteById(Integer hpId) {
                 List<Hospital> hospitalList = hospitalMapper.queryByState();
                 if(hospitalList.size() == 0||hospitalList == null)
                 {
-                        return Result.error("暂无数据");
+                        return Result.error(HOSPITAL_FIND_NOT_EXIST);
                 }
                 return Result.success(hospitalList);
         }

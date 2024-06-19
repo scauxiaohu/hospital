@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hospital.util.Status.*;
+
 /**
  * (SetMeal)表服务实现类
  *
@@ -98,7 +100,7 @@ public Result deleteById(Integer smId) {
                 List<SetMeal> setMeals = setMealMapper.getSetMealsByType(type);
                 if(setMeals.size() == 0||setMeals == null)
                 {
-                        return Result.error("未找到相应套餐信息");
+                        return Result.error( SETMEAL_FIND_NOT_EXIST);
                 }
                 List<MealInfoResponse> mealInfoResponses = new ArrayList<>();
                 for(SetMeal setMeal : setMeals) {

@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CireportInfo {
+
     private String ciName;
     private Integer ciId;
     List<CidetailedReport> cidetailedReportList = new ArrayList<>();

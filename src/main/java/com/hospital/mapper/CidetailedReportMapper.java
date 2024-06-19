@@ -2,10 +2,12 @@ package com.hospital.mapper;
 
 import com.hospital.entity.CheckItemDetailed;
 import com.hospital.entity.CidetailedReport;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (CidetailedReport)表数据库访问层
@@ -82,6 +84,9 @@ public interface CidetailedReportMapper {
         int deleteById(Integer cidrId);
 
     List<CidetailedReport> queryCidetailedReportByCirIdAndOrderId(@Param("ciId") Integer cirId, @Param("orderId") Integer orderId);
+
+    @MapKey("orderId")
+    Map<Integer, List<CidetailedReport>> batchQueryCidetailedReports(@Param("orderIds") List<Integer> orderIds);
 }
 
 
