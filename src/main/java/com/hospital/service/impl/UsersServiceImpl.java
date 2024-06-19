@@ -3,14 +3,20 @@ package com.hospital.service.impl;
 import com.hospital.entity.Users;
 import com.hospital.mapper.UsersMapper;
 import com.hospital.service.UsersService;
+import com.hospital.util.JwtUtils;
 import com.hospital.util.Result;
 import org.apache.ibatis.annotations.Options;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.hospital.util.Status.*;
 
@@ -24,7 +30,8 @@ import static com.hospital.util.Status.*;
 public class UsersServiceImpl implements UsersService {
 @Resource
 private UsersMapper usersMapper;
-
+@Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
 /**
  * 登录 user
@@ -46,9 +53,30 @@ private UsersMapper usersMapper;
                        return Result.error(USER_LOGIN_PASSWORD_ERROR);
                    }
            }
+            //创建redis缓存,放token令牌
 
-               /* return Result.success(users.get(0));*/
-                return Result.success(users.get(0));
+            Map<String,Object> map=new HashMap<>();
+            map.put("userId",user.getUserId());
+            String token=JwtUtils.generateJwt(map);
+            // 准备一个HashMap来存储与JWT关联的额外信息到Redis
+            Map<String, String> tokenInfo = new HashMap<>();
+            tokenInfo.put("userId", user.getUserId()); // 存储用户ID，便于根据token查找用户
+            tokenInfo.put("token", token); // 可选，也可以只存储token作为标识
+            tokenInfo.put("expiration", String.valueOf(System.currentTimeMillis() + 1800000L)); // 存储JWT的过期时间戳
+            // 将token作为键，关联信息作为值存入Redis
+            //设计这个键的时间长度，可以根据实际情况设置，比如15分钟，30分钟，1小时，1天等等
+
+            redisTemplate.opsForHash().putAll(token, tokenInfo);
+            redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
+            /* return Result.success(users.get(0));*/
+
+            Map<String,Object> result=new HashMap<>();
+            result.put("token",token);
+            result.put("user",users.get(0));
+            System.out.println(result);
+
+            return Result.success(result);
+
            }
 
     @Override

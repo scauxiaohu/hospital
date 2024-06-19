@@ -1,14 +1,14 @@
 package com.hospital.controller;
 
+import com.hospital.config.RedisConfig;
 import com.hospital.entity.Users;
 import com.hospital.service.UsersService;
 import com.hospital.util.Result;
-import org.apache.ibatis.annotations.Param;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
 
 /**
  * (Users)表控制层
@@ -31,7 +31,7 @@ private UsersService usersService;
      * @return
      */
     @PostMapping("login")
-        public Result login(@RequestBody Users user) {
+        public Result login (@RequestBody Users user) {
 
         return usersService.login(user);
         }

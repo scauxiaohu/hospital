@@ -1,8 +1,10 @@
 package com.hospital;
 
+import com.hospital.entity.Users;
 import com.hospital.request.CalendarRequest;
 import com.hospital.service.CalendarService;
 import com.hospital.service.CireportService;
+import com.hospital.service.UsersService;
 import com.hospital.service.impl.CireportServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import java.time.LocalDate;
 class HospitalApplicationTests {
 @Autowired
 private CalendarService calendarService;
+@Resource
+private UsersService userService;
     @Test
     void contextLoads() {
         LocalDate date = LocalDate.now();
@@ -30,6 +34,10 @@ private CalendarService calendarService;
     @Test
     void contextLoads1()
     {
-        cireportService.checkCireport("1234567111");
+        Users user = new Users();
+        user.setUserId("1234567111");
+        user.setPassword("123");
+
+     userService.login(user);
     }
 }

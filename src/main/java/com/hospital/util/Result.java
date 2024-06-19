@@ -21,9 +21,9 @@ import lombok.NoArgsConstructor;
 public class Result<T> {
   
     private Integer code; //状态码, 1成功, 0失败
-
     private String message;
-    private T Data;
+    private T data;
+
 
     // 成功的静态方法
     public static <T> Result<T> success(T data) {
