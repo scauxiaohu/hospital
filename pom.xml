@@ -65,7 +65,11 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.cloopen</groupId>
+            <artifactId>java-sms-sdk</artifactId>
+            <version>1.0.3</version>
+        </dependency>
         <!-- 如果使用JDK 9以上版本，可能还需要下面的依赖 -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>

@@ -43,8 +43,17 @@ private UsersService usersService;
      * @return
      */
     @PostMapping("register")
-    public Result register(@RequestBody Users user) {
-        return usersService.register(user);
+    public Result register(@RequestBody Users user,@RequestParam("code") String code) {
+        System.out.println(code);
+        System.out.println(user);
+        return usersService.register(user,code);
     }
+    //发送验证码
+
+    @GetMapping("sendCode")
+    public Result sendCode(@RequestParam("phone") String phone) {
+        return usersService.sendCode(phone);
+    }
+
 }
 

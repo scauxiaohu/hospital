@@ -5,6 +5,7 @@ import com.hospital.mapper.UsersMapper;
 import com.hospital.service.UsersService;
 import com.hospital.util.JwtUtils;
 import com.hospital.util.Result;
+import com.hospital.util.SendMessage;
 import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -81,7 +82,15 @@ private UsersMapper usersMapper;
 
     @Override
     @Transactional
-    public Result register(Users user) {
+    public Result register(Users user,String code) {
+           //TODO 验证码校验
+        String codeRedis=(String) redisTemplate.opsForValue().get(user.getUserId());
+    System.out.println(codeRedis);
+
+        if(!code.equals(codeRedis))
+        {
+            return Result.error(USER_CAPTCHA_ERROR);
+        }
        Users userResult=usersMapper.queryById(user.getUserId());
        if(userResult!=null) {
            return Result.error(USER_REGISTER_ALREADY_EXIST);
@@ -93,6 +102,22 @@ private UsersMapper usersMapper;
         else return Result.error(USER_REGISTER_FAILED);
     }
 
+    @Override
+    public Result sendCode(String phone)
+    {
+        //先判断该手机号是否已经发送过验证码
+      if(redisTemplate.opsForValue().get(phone)!=null)
+      {
+          return Result.error(USER_CAPTCHA_SEND_TOO_FAST);
+      }
+
+        //TODO 发送验证码
+        SendMessage sendMessage=new SendMessage();
+         String result=sendMessage.message(phone);
+
+        redisTemplate.opsForValue().set(phone,result,60,TimeUnit.SECONDS);
+        return Result.success(USER_CAPTCHA_SUCCESS);
+    }
 
     /**
  * 通过ID查询单条数据

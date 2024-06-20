@@ -17,8 +17,17 @@ public enum Status {
     USER_LOGIN_PASSWORD_ERROR(3, "密码错误"),
     USER_REGISTER_FAILED(4, "用户注册失败"),
     USER_REGISTER_ALREADY_EXIST(5, "用户已存在"),
+    //验证码正确
+    USER_CAPTCHA_SUCCESS(6, "验证码正确"),
+    //验证码错误
+
+    USER_CAPTCHA_ERROR(7, "验证码错误"),
+    //
+    USER_CAPTCHA_SEND_TOO_FAST(8, "验证码发送过快，请稍后再试"),
+
 
     //重新登录
+
     USER_LOGIN_RELOGIN(100, "重新登录"),
 
 
@@ -32,6 +41,8 @@ public enum Status {
     SETMEAL_FIND_NOT_EXIST(2, "套餐不存在"),
 
     CIREPORT_FIND_NOT_EXIST(2, "诊断报告不存在");
+
+
 
     private final Integer code;
     private final String message;

@@ -6,6 +6,7 @@ import com.hospital.service.CalendarService;
 import com.hospital.service.CireportService;
 import com.hospital.service.UsersService;
 import com.hospital.service.impl.CireportServiceImpl;
+import com.hospital.util.SendMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,10 +35,6 @@ private UsersService userService;
     @Test
     void contextLoads1()
     {
-        Users user = new Users();
-        user.setUserId("1234567111");
-        user.setPassword("123");
-
-     userService.login(user);
+       System.out.println(userService.sendCode("13723626345"));
     }
 }
