@@ -17,8 +17,8 @@ public enum Status {
     USER_LOGIN_PASSWORD_ERROR(3, "密码错误"),
     USER_REGISTER_FAILED(4, "用户注册失败"),
     USER_REGISTER_ALREADY_EXIST(5, "用户已存在"),
-    //验证码正确
-    USER_CAPTCHA_SUCCESS(6, "验证码正确"),
+  /*  //验证码正确
+    USER_CAPTCHA_SUCCESS(6, "验证码正确"),*/
     //验证码错误
 
     USER_CAPTCHA_ERROR(7, "验证码错误"),
@@ -28,8 +28,8 @@ public enum Status {
     USER_CAPTCHA_NOT_EXIST(9, "验证码不存在"),
     //请先注册
     USER_UPDATE_PASSWORD_NOT_EXIST(10,"用户不存在，请先注册"),
-   //修改密码成功
-    USER_UPDATE_PASSWORD_SUCCESS(11,"修改密码成功"),
+ /*  //修改密码成功
+    USER_UPDATE_PASSWORD_SUCCESS(11,"修改密码成功"),*/
     //修改密码失败
     USER_UPDATE_PASSWORD_FAILED(12,"修改密码失败"),
 

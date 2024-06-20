@@ -150,7 +150,7 @@ public class UsersServiceImpl implements UsersService {
         String result = sendMessage.message(phone);
 
         redisTemplate.opsForValue().set(phone, result, 60, TimeUnit.SECONDS);
-        return Result.success(USER_CAPTCHA_SUCCESS);
+        return Result.success();
     }
 
     /**
@@ -225,7 +225,7 @@ public class UsersServiceImpl implements UsersService {
         if (!code.equals(codeRedis)) {
             return Result.error(USER_CAPTCHA_ERROR);
         }
-        return Result.success(USER_CAPTCHA_SUCCESS);
+        return Result.success();
 
 
     }
@@ -234,7 +234,7 @@ public class UsersServiceImpl implements UsersService {
         Integer result = usersMapper.update(users);
 
         if (result == 1) {
-            return Result.success(USER_UPDATE_PASSWORD_SUCCESS);
+            return Result.success();
         }
         else
         {
