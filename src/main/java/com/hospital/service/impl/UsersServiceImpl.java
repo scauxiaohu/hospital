@@ -86,7 +86,10 @@ private UsersMapper usersMapper;
            //TODO 验证码校验
         String codeRedis=(String) redisTemplate.opsForValue().get(user.getUserId());
     System.out.println(codeRedis);
-
+        if (codeRedis==null)
+        {
+            return Result.error(USER_CAPTCHA_NOT_EXIST);
+        }
         if(!code.equals(codeRedis))
         {
             return Result.error(USER_CAPTCHA_ERROR);
@@ -101,7 +104,47 @@ private UsersMapper usersMapper;
         return Result.success(user);
         else return Result.error(USER_REGISTER_FAILED);
     }
+    @Override
+    public Result loginByCode(String userId, String code)
+    {
+        //TODO 验证码校验
+        String codeRedis=(String) redisTemplate.opsForValue().get(userId);
+        System.out.println(codeRedis);
 
+        if(!code.equals(codeRedis))
+        {
+            return Result.error(USER_CAPTCHA_ERROR);
+        }
+
+        Users user=usersMapper.queryById(userId);
+        if(user==null)
+        {
+            return Result.error(USER_LOGIN_NOT_EXIST);
+        }
+        //创建redis缓存,放token令牌
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",user.getUserId());
+        String token=JwtUtils.generateJwt(map);
+        // 准备一个HashMap来存储与JWT关联的额外信息到Redis
+        Map<String, String> tokenInfo = new HashMap<>();
+        tokenInfo.put("userId", user.getUserId()); // 存储用户ID，便于根据token查找用户
+        tokenInfo.put("token", token); // 可选，也可以只存储token作为标识
+        tokenInfo.put("expiration", String.valueOf(System.currentTimeMillis() + 1800000L)); // 存储JWT的过期时间戳
+        // 将token作为键，关联信息作为值存入Redis
+        //设计这个键的时间长度，可以根据实际情况设置，比如15分钟，30分钟，1小时，1天等等
+
+        redisTemplate.opsForHash().putAll(token, tokenInfo);
+        redisTemplate.expire(token, 1800, TimeUnit.SECONDS);
+        /* return Result.success(users.get(0));*/
+
+        Map<String,Object> result=new HashMap<>();
+        result.put("token",token);
+        result.put("user",user);
+        System.out.println(result);
+
+        return Result.success(result);
+    }
     @Override
     public Result sendCode(String phone)
     {

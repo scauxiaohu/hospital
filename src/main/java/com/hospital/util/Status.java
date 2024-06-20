@@ -24,7 +24,8 @@ public enum Status {
     USER_CAPTCHA_ERROR(7, "验证码错误"),
     //
     USER_CAPTCHA_SEND_TOO_FAST(8, "验证码发送过快，请稍后再试"),
-
+//验证码不存在
+    USER_CAPTCHA_NOT_EXIST(9, "验证码不存在"),
 
     //重新登录
 

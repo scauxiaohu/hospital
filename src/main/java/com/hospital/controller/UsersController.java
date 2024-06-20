@@ -36,6 +36,11 @@ private UsersService usersService;
         return usersService.login(user);
         }
 
+    @PostMapping("loginByCode")
+    public Result loginByCode (@RequestParam String userId, @RequestParam String code) {
+
+        return usersService.loginByCode(userId,code);
+    }
 
     /**
      * 注册

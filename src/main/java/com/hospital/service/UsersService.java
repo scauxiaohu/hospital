@@ -58,5 +58,7 @@ public interface UsersService {
         Result register(Users user,String code);
 
         Result sendCode(String phone);
+
+    Result loginByCode(String userId, String code);
 }
 
