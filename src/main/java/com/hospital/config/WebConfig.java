@@ -31,11 +31,13 @@ public class WebConfig implements WebMvcConfigurer {
         // 返回
         return template;
     }
-*/@Autowired
- private RedisTemplate<String, Object> redisTemplate;
+*/
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(new LoginInterceptor( redisTemplate)).addPathPatterns("/**").excludePathPatterns("/users/**").excludePathPatterns("/templates/**");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/users/**").excludePathPatterns("/templates/**");
     }
 }

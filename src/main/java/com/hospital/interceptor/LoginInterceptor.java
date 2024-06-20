@@ -28,12 +28,14 @@ import static com.hospital.util.Status.USER_LOGIN_RELOGIN;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private RedisTemplate<String,Object> redisTemplate;
+ /*   private RedisTemplate<String,Object> redisTemplate;
 
     public LoginInterceptor(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
-    }
+    }*/
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     @Override //目标资源方法运行前运行, 返回true: 放行, 放回false, 不放行
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 

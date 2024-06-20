@@ -60,5 +60,9 @@ public interface UsersService {
         Result sendCode(String phone);
 
     Result loginByCode(String userId, String code);
+
+    Result updatePasswordProcessOne(Users users,String code);
+
+    Result updatePasswordProcessTwo(Users users);
 }
 

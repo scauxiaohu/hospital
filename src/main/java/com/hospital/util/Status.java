@@ -26,9 +26,14 @@ public enum Status {
     USER_CAPTCHA_SEND_TOO_FAST(8, "验证码发送过快，请稍后再试"),
 //验证码不存在
     USER_CAPTCHA_NOT_EXIST(9, "验证码不存在"),
+    //请先注册
+    USER_UPDATE_PASSWORD_NOT_EXIST(10,"用户不存在，请先注册"),
+   //修改密码成功
+    USER_UPDATE_PASSWORD_SUCCESS(11,"修改密码成功"),
+    //修改密码失败
+    USER_UPDATE_PASSWORD_FAILED(12,"修改密码失败"),
 
     //重新登录
-
     USER_LOGIN_RELOGIN(100, "重新登录"),
 
 

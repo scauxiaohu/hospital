@@ -48,17 +48,42 @@ private UsersService usersService;
      * @return
      */
     @PostMapping("register")
+
+
     public Result register(@RequestBody Users user,@RequestParam("code") String code) {
         System.out.println(code);
         System.out.println(user);
         return usersService.register(user,code);
     }
     //发送验证码
-
+    /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
     @GetMapping("sendCode")
     public Result sendCode(@RequestParam("phone") String phone) {
         return usersService.sendCode(phone);
     }
 
+    /**
+     * 修改密码发送验证码
+     * @param Users
+     * @param code
+     * @return
+     */
+    @PostMapping("updatePasswordOne")
+    public Result updatePasswordProcessOne(@RequestBody Users Users,@RequestParam("code") String code) {
+        return usersService.updatePasswordProcessOne(Users,code);
+    }
+    /**
+     * 修改密码
+     * @param Users
+     * @return
+     */
+     @PostMapping("updatePasswordTwo")
+    public Result updatePasswordProcessTwo(@RequestBody Users Users) {
+         return usersService.updatePasswordProcessTwo(Users);
+     }
 }
 

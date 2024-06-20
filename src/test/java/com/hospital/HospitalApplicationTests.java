@@ -6,6 +6,7 @@ import com.hospital.service.CalendarService;
 import com.hospital.service.CireportService;
 import com.hospital.service.UsersService;
 import com.hospital.service.impl.CireportServiceImpl;
+import com.hospital.service.impl.UsersServiceImpl;
 import com.hospital.util.SendMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,9 @@ private UsersService userService;
     @Resource
     private CireportService cireportService;
     @Test
-    void contextLoads1()
-    {
-       System.out.println(userService.sendCode("13723626345"));
+    void contextLoads1() {
+        UsersServiceImpl usersService = new UsersServiceImpl();
+        Users users = new Users();
+        usersService.login(users);
     }
 }
