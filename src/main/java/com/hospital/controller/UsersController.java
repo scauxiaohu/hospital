@@ -62,8 +62,9 @@ private UsersService usersService;
      * @return
      */
     @GetMapping("sendCode")
-    public Result sendCode(@RequestParam("phone") String phone) {
-        return usersService.sendCode(phone);
+    public Result sendCode(@RequestParam("phone") String phone,@RequestParam("type") Integer type) throws Exception {
+        System.out.println(type);
+        return usersService.sendCode(phone,type);
     }
 
     /**

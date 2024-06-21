@@ -57,7 +57,7 @@ public interface UsersService {
 
         Result register(Users user,String code);
 
-        Result sendCode(String phone);
+        Result sendCode(String phone,Integer type) throws Exception;
 
     Result loginByCode(String userId, String code);
 

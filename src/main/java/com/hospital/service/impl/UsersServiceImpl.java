@@ -6,6 +6,7 @@ import com.hospital.service.UsersService;
 import com.hospital.util.JwtUtils;
 import com.hospital.util.Result;
 import com.hospital.util.SendMessage;
+import com.hospital.util.SendSms;
 import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -139,17 +140,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Result sendCode(String phone) {
+    public Result sendCode(String phone,Integer type) throws Exception {
         //先判断该手机号是否已经发送过验证码
         if (redisTemplate.opsForValue().get(phone) != null) {
             return Result.error(USER_CAPTCHA_SEND_TOO_FAST);
         }
 
-        //TODO 发送验证码
+      /*  //TODO 发送验证码
         SendMessage sendMessage = new SendMessage();
-        String result = sendMessage.message(phone);
-
-        redisTemplate.opsForValue().set(phone, result, 60, TimeUnit.SECONDS);
+        String result = sendMessage.message(phone);*/
+        SendSms sendSms = new SendSms();
+        Result result = sendSms.sendSms(phone,type);
+        if(type == 1||type == 2)
+        redisTemplate.opsForValue().set(phone, result.getData().toString(), 60, TimeUnit.SECONDS);
         return Result.success();
     }
 

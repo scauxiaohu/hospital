@@ -12,7 +12,7 @@ public enum Status {
     SUCCESS(1, ""),
 
 
-
+USER_GET_FAILED(11, "获取用户信息失败,请重试"),
     USER_LOGIN_NOT_EXIST(2, "用户不存在"),
     USER_LOGIN_PASSWORD_ERROR(3, "密码错误"),
     USER_REGISTER_FAILED(4, "用户注册失败"),
@@ -46,9 +46,15 @@ public enum Status {
 
     SETMEAL_FIND_NOT_EXIST(2, "套餐不存在"),
 
-    CIREPORT_FIND_NOT_EXIST(2, "诊断报告不存在");
+    CIREPORT_FIND_NOT_EXIST(2, "诊断报告不存在"),
 
+    //TOKEN解析失败
+    TOKEN_PARSE_FAILED(100, "TOKEN解析失败"),
 
+    //支付宝订单创建失败
+    ALIPAY_ORDER_CREATE_FAILED(500, "支付宝订单创建失败"),
+    //支付宝支付失败
+    ALIPAY_PAY_FAILED(500, "支付宝支付失败");
 
     private final Integer code;
     private final String message;

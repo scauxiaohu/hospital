@@ -73,11 +73,14 @@ public Result queryAll(Orders orders) {
 @Override
 @Transactional
 public Result insert(Orders orders) {
+
+    //先改0测试
         orders.setState(1);
         List<Orders> ordersList = ordersMapper.queryAll(orders);
         if (ordersList.size() > 0) {
                 return Result.error(ORDER_CREATE_FAILED);
         }
+        orders.setState(0);
          ordersMapper.insert(orders);
 
                 List<SetMealDetailed> setMealDetailedList = setMealDetailedMapper.queryBySmId(orders.getSmId());

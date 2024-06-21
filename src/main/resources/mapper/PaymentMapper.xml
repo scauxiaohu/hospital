@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mapper.PaymentMapper">
+
+    <resultMap type="com.hospital.entity.Payment" id="PaymentMap">
+        <result property="opId" column="opId" jdbcType="INTEGER"/>
+        <result property="odId" column="odId" jdbcType="INTEGER"/>
+        <result property="pyId" column="pyId" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="price" column="price" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PaymentMap">
+        select
+opId, odId, pyId, state, price
+        from payment
+        where opId = #{opId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="PaymentMap">
+        select
+opId, odId, pyId, state, price
+        from payment
+        <where>
+            <if test="opId != null">
+                and opId = #{opId}
+            </if>
+            <if test="odId != null">
+                and odId = #{odId}
+            </if>
+            <if test="pyId != null and pyId != ''">
+                and pyId = #{pyId}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from payment
+        <where>
+            <if test="opId != null">
+                and opId = #{opId}
+            </if>
+            <if test="odId != null">
+                and odId = #{odId}
+            </if>
+            <if test="pyId != null and pyId != ''">
+                and pyId = #{pyId}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="opId" useGeneratedKeys="true">
+        insert into payment(odId, pyId, state, price)
+        values (#{odId}, #{pyId}, #{state}, #{price})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="opId" useGeneratedKeys="true">
+        insert into payment(odId, pyId, state, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.odId}, #{entity.pyId}, #{entity.state}, #{entity.price})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="opId" useGeneratedKeys="true">
+        insert into payment(odId, pyId, state, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.odId}, #{entity.pyId}, #{entity.state}, #{entity.price})
+        </foreach>
+        on duplicate key update
+odId = values(odId),
+pyId = values(pyId),
+state = values(state),
+price = values(price)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update payment
+        <set>
+            <if test="odId != null">
+                odId = #{odId},
+            </if>
+            <if test="pyId != null and pyId != ''">
+                pyId = #{pyId},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+        </set>
+        where opId = #{opId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from payment where opId = #{opId}
+    </delete>
+
+</mapper>
+
+

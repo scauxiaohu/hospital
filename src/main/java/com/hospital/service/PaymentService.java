@@ -1,56 +1,55 @@
 package com.hospital.service;
 
-import com.hospital.entity.SetMeal;
+import com.hospital.entity.Payment;
 import com.hospital.util.Result;
 
 /**
- * (SetMeal)表服务接口
+ * (Payment)表服务接口
  *
  * @author xiaohu
- * @since 2024-06-13 12:37:01
+ * @since 2024-06-21 16:11:10
  */
-public interface SetMealService {
+public interface PaymentService {
 
         /**
          * 通过ID查询单条数据
          *
-         * @param smId 主键
+         * @param opId 主键
          * @return 实例对象
          */
-        Result queryById(Integer smId);
+        Result queryById(Integer opId);
 
         /**
          * 全查询
          *
-         * @param setMeal 筛选条件
+         * @param payment 筛选条件
          * @return 查询结果
          */
-        Result queryAll(SetMeal setMeal);
+        Result queryAll(Payment payment);
 
         /**
          * 新增数据
          *
-         * @param setMeal 实例对象
+         * @param payment 实例对象
          * @return 实例对象
          */
-        Result insert(SetMeal setMeal);
+        Result insert(Payment payment);
 
         /**
          * 修改数据
          *
-         * @param setMeal 实例对象
+         * @param payment 实例对象
          * @return 实例对象
          */
-        Result update(SetMeal setMeal);
+        Result update(Payment payment);
 
         /**
          * 通过主键删除数据
          *
-         * @param smId 主键
+         * @param opId 主键
          * @return 是否成功
          */
-        Result deleteById(Integer smId);
+        Result deleteById(Integer opId);
 
-    Result getSetMealsByType(Integer type,String userId);
-}
+        }
 

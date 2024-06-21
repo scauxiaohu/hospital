@@ -2,18 +2,22 @@ package com.hospital.service.impl;
 
 import com.hospital.entity.CheckItem;
 import com.hospital.entity.SetMealDetailed;
+import com.hospital.entity.Users;
 import com.hospital.mapper.CheckItemMapper;
 import com.hospital.mapper.SetMealDetailedMapper;
+import com.hospital.mapper.UsersMapper;
 import com.hospital.response.MealInfoResponse;
 import com.hospital.service.SetMealService;
 import com.hospital.entity.SetMeal;
 import com.hospital.mapper.SetMealMapper;
 import com.hospital.util.Result;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.hospital.util.Status.*;
 
@@ -31,6 +35,9 @@ private SetMealMapper setMealMapper;
 private SetMealDetailedMapper setMealDetailedMapper;
 @Resource
 private CheckItemMapper checkItemMapper;
+@Resource
+private UsersMapper usersMapper;
+
 /**
  * 通过ID查询单条数据
  *
@@ -95,8 +102,9 @@ public Result deleteById(Integer smId) {
          * @return
          */
         @Override
-       public Result getSetMealsByType(Integer type)
+       public Result getSetMealsByType(Integer type,String userId)
         {
+                Users user = usersMapper.queryById(userId);
                 List<SetMeal> setMeals = setMealMapper.getSetMealsByType(type);
                 if(setMeals.size() == 0||setMeals == null)
                 {
@@ -107,7 +115,12 @@ public Result deleteById(Integer smId) {
 
                         MealInfoResponse mealInfoResponse = new MealInfoResponse();
                         mealInfoResponse.setName(setMeal.getName());
-                        mealInfoResponse.setPrice(setMeal.getPrice());
+                        Integer price = setMeal.getPrice();
+                        if(user.getUserType() == 2)
+                        {
+                                price = 0;
+                        }
+                        mealInfoResponse.setPrice(price);
                         mealInfoResponse.setSmId(setMeal.getSmId());
                         mealInfoResponse.setType(setMeal.getType());
 

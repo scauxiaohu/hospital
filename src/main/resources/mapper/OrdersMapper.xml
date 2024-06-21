@@ -76,7 +76,7 @@ orderId, orderDate, userId, hpId, smId, state
     <select id="getCalendarResultList" resultType="com.hospital.response.CalendarResponse">
         <foreach collection="dateList" item="date"  separator="union">
             select
-                #{date} as ymd,count(*) as existing from orders where orderDate=#{date} and hpId=#{hpId}
+                #{date} as ymd,count(*) as existing from orders where orderDate=#{date} and hpId=#{hpId} and state != 0
         </foreach>
     </select>
     <select id="queryOrdersByUserId" resultMap="OrdersMap">
