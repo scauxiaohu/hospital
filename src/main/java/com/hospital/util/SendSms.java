@@ -10,13 +10,16 @@ import com.aliyun.httpcomponent.httpclient.ApacheAsyncHttpClientBuilder;
 import com.aliyun.sdk.service.dysmsapi20170525.models.*;
 import com.aliyun.sdk.service.dysmsapi20170525.*;
 import com.google.gson.Gson;
+import com.hospital.service.OrdersService;
 import darabonba.core.RequestConfiguration;
 import darabonba.core.client.ClientOverrideConfiguration;
 import darabonba.core.utils.CommonUtil;
 import darabonba.core.TeaPair;
+import org.springframework.stereotype.Component;
 
 //import javax.net.ssl.KeyManager;
 //import javax.net.ssl.X509TrustManager;
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -25,8 +28,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.io.*;
-
+@Component
 public class SendSms {
+
     public Result sendSms(String phone, Integer type) throws Exception {
 
         // HttpClient Configuration
@@ -106,7 +110,7 @@ public class SendSms {
 
             sendSmsRequest = SendSmsRequest.builder()
                     .signName("熙康医院")
-                    .templateCode("SMS_468295656")
+                    .templateCode("SMS_468320609")
                     .phoneNumbers(phone)
                     .templateParam("{\"date\":\""+time+"\"}")
                     // Request-level configuration rewrite, can set Http request parameters, etc.

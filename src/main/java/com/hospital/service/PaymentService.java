@@ -51,5 +51,6 @@ public interface PaymentService {
          */
         Result deleteById(Integer opId);
 
-        }
+    Payment selectByOrderId(Integer orderId);
+}
 

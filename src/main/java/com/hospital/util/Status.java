@@ -56,6 +56,7 @@ USER_GET_FAILED(11, "获取用户信息失败,请重试"),
     //支付宝支付失败
     ALIPAY_PAY_FAILED(500, "支付宝支付失败");
 
+
     private final Integer code;
     private final String message;
     public int getCode() {

@@ -3,6 +3,7 @@ package com.hospital.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.hospital.util.JwtUtils;
 import com.hospital.util.Result;
+import com.hospital.util.UserHolder;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 redisTemplate.opsForHash().putAll(newToken, tokenInfo);
                 redisTemplate.expire(newToken, 1800, TimeUnit.SECONDS);
 
+                UserHolder.saveUser(userId);
             resp.addHeader("Authorization", newToken);
             }
             else {
@@ -120,5 +122,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override //视图渲染完毕后运行, 最后运行
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         System.out.println("afterCompletion...");
+        UserHolder.removeUser();
     }
 }

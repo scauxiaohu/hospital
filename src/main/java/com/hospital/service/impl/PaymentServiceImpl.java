@@ -7,6 +7,7 @@ import com.hospital.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Payment)表服务实现类
@@ -75,6 +76,21 @@ public Result update(Payment payment) {
 public Result deleteById(Integer opId) {
         boolean del = this.paymentMapper.deleteById(opId) > 0;
         return Result.success(del);
+        }
+        @Override
+       public Payment selectByOrderId(Integer orderId)
+        {
+                Payment payment = new Payment();
+                payment.setOdId(orderId);
+                List<Payment> payments = paymentMapper.queryAll(payment);
+                if(payments.size() > 0)
+                {
+                        return payments.get(0);
+                }
+                else
+                {
+                        return null;
+                        }
         }
         }
 

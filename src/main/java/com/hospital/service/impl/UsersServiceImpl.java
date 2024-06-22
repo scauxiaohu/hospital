@@ -138,7 +138,8 @@ public class UsersServiceImpl implements UsersService {
 
         return Result.success(result);
     }
-
+@Resource
+    private SendSms sendSms;
     @Override
     public Result sendCode(String phone,Integer type) throws Exception {
         //先判断该手机号是否已经发送过验证码
@@ -149,7 +150,7 @@ public class UsersServiceImpl implements UsersService {
       /*  //TODO 发送验证码
         SendMessage sendMessage = new SendMessage();
         String result = sendMessage.message(phone);*/
-        SendSms sendSms = new SendSms();
+
         Result result = sendSms.sendSms(phone,type);
         if(type == 1||type == 2)
         redisTemplate.opsForValue().set(phone, result.getData().toString(), 60, TimeUnit.SECONDS);
