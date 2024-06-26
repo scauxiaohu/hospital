@@ -47,7 +47,7 @@ public interface OrdersMapper {
          * @param orders 实例对象
          * @return 影响行数
          */
-        int insert(Orders orders);
+        Integer insert(Orders orders);
 
         /**
          * 批量新增数据（MyBatis原生foreach方法）

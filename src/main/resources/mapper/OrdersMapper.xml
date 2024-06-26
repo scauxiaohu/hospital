@@ -85,9 +85,13 @@ orderId, orderDate, userId, hpId, smId, state
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
-        insert into orders(orderDate, userId, hpId, smId, state)
-        values (#{orderDate}, #{userId}, #{hpId}, #{smId}, #{state})
+
+            INSERT INTO orders(orderDate, userId, hpId, smId, state)
+            VALUES (#{orderDate}, #{userId}, #{hpId}, #{smId}, #{state})
+
     </insert>
+
+
 
     <insert id="insertBatch" keyProperty="orderId" useGeneratedKeys="true">
         insert into orders(orderDate, userId, hpId, smId, state)

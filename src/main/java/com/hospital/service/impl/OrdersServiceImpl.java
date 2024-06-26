@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.hospital.util.Status.*;
@@ -81,8 +84,23 @@ public Result insert(Orders orders) {
                 return Result.error(ORDER_CREATE_FAILED);
         }
         orders.setState(0);
-         ordersMapper.insert(orders);
+    String arr[]=hospitalMapper.queryById(orders.getHpId()).getRule().split(",");
+    System.out.println(arr);
+    System.out.println(orders.getOrderDate());
 
+    // 将Date转换为LocalDate
+    LocalDate localDate = orders.getOrderDate().toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+    Integer day=localDate.getDayOfWeek().getValue();
+    if(day==7)day=0;
+    Integer total=Integer.parseInt(arr[day]);
+
+       Integer num = ordersMapper.insert(orders);
+        if(num!=1)
+        {
+            return Result.error(ORDER_CREATE_FAILED);
+        }
                 List<SetMealDetailed> setMealDetailedList = setMealDetailedMapper.queryBySmId(orders.getSmId());
                 for (SetMealDetailed setMealDetailed : setMealDetailedList) {
 

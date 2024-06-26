@@ -118,7 +118,7 @@ public Result deleteById(Integer smId) {
                         Integer price = setMeal.getPrice();
                         if(user.getUserType() == 2)
                         {
-                                price = 0;
+                                price = 1;
                         }
                         mealInfoResponse.setPrice(price);
                         mealInfoResponse.setSmId(setMeal.getSmId());
