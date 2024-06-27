@@ -110,7 +110,7 @@ public class CireportServiceImpl implements CireportService {
                 reportInfoResponse.setUserId(userId);
                 reportInfoResponse.setHpId(order.getHpId());
                 reportInfoResponse.setReportDate(order.getOrderDate());
-
+    System.out.println("++++++++++++++" + reportInfoResponse.getReportDate());
                 Hospital hospital = hospitalMapper.queryById(order.getHpId());
                 reportInfoResponse.setHpName(hospital.getName());
 

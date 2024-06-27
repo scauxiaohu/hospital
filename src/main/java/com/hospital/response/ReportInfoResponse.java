@@ -17,7 +17,7 @@ public class ReportInfoResponse {
     private Integer orderId;
     private Integer hpId;
     private String hpName;
-    @JsonFormat( pattern = "yyyy-MM-dd" )
+    @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+8" )
     private Date reportDate;
    private List<CireportInfo> reports=new ArrayList<>();
    private List<OverallResult> overallResults=new ArrayList<>();
